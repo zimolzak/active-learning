@@ -46,6 +46,12 @@ Points:
 - Related to a bunch of other problems.
     - OMOP
     - LOINC
+    - **Mini-sentinel** paper(s) (AZ has refs)
+    - non medicine stuff? Tamr etc?? & 1 other?
+    - *note* check refs of the "search EMR paper" refs 10 & 5?? of: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4288074/
+    - david, sara, me, et al poster? and refs of that paper.
+    - HSR-DATA list search
+    - Gagnon paper about dementia (not lab) PMID 24701364 
 
 Objective
 --------
