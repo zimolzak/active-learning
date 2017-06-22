@@ -51,7 +51,6 @@ Points:
     - *non medicine stuff? Tamr etc?? & 1 other?* (Held, Stonebraker, Davenport, Ilyas, Brodie, Palmer, Markarian. Getting Data Right. 2016. O'Reilly Media, Sebastopol, CA.)
     - Our current process is designed to harmonize test results from 144 independent clinical laboratories. It relies on subject matter experts (SMEs) to search for appropriate laboratory test names, and then to evaluate for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, value ranges, and laboratory test names. SMEs generally accomplish this using a spreadsheet that can be sorted and filtered. (Raju SP, Ho Y-L, Zimolzak AJ, Katcher B, Cho K, Gagnon DR. Validation of Laboratory Values in a Heterogeneous Healthcare System: The US Veterans Affairs Experience. 31st International Conference on Pharmacoepidemiology & Therapeutic Risk Management (ICPE). Boston; 8/22-26/2015.)
     - *HSR-DATA list search*
-    - Similarly to laboratory tests, *Gagnon paper about dementia (not lab) PMID 24701364*
 
 Objective
 --------
