@@ -46,6 +46,7 @@ Points:
 - Related to a bunch of other problems.
     - OMOP (or other data models)
     - The LOINC standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. (Khan AN, Griffith SP, Moore C, Russell D, Rosario AC Jr, Bertolli J. Standardizing laboratory data by mapping to LOINC. J Am Med Inform Assoc. 2006 May-Jun;13(3):353-5.)
+    - Mappings of local laboratory tests to LOINC may be erroneous, as well (Lin MC, Vreeman DJ, McDonald CJ, Huff SM. Correctness of Voluntary LOINC Mapping for Laboratory Tests in Three Large Institutions. AMIA Annu Symp Proc. 2010 Nov 13;2010:447-51.).
     - Previous authors have faced similar lab result harmonization problems. For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. (Raebel MA, Haynes K, Woodworth TS, Saylor G, Cavagnaro E, Coughlin KO, Curtis LH, Weiner MG, Archdeacon P, Brown JS. Electronic clinical laboratory test results data tables: lessons from Mini-Sentinel. Pharmacoepidemiol Drug Saf. 2014 Jun;23(6):609-18.)
     - non medicine stuff? Tamr etc?? & 1 other?
     - *note* check refs of the "search EMR paper" refs 10 & 5?? of: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4288074/
