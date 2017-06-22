@@ -46,7 +46,7 @@ Points:
 - Related to a bunch of other problems.
     - OMOP
     - LOINC
-    - **Mini-sentinel** paper(s) (AZ has refs)
+    - Previous authors have faced similar lab result harmonization problems. For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. (Raebel MA, Haynes K, Woodworth TS, Saylor G, Cavagnaro E, Coughlin KO, Curtis LH, Weiner MG, Archdeacon P, Brown JS. Electronic clinical laboratory test results data tables: lessons from Mini-Sentinel. Pharmacoepidemiol Drug Saf. 2014 Jun;23(6):609-18.)
     - non medicine stuff? Tamr etc?? & 1 other?
     - *note* check refs of the "search EMR paper" refs 10 & 5?? of: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4288074/
     - david, sara, me, et al poster? and refs of that paper.
