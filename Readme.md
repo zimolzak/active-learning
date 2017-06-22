@@ -26,41 +26,45 @@ Article
 Background and Significance
 --------
 
-- Clinical concept adjudication is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
-- Important as a first step for many database-based analyses
-- For example, we might want to find serum creatinine lab test results, or serum free light chain results
+Clinical concept adjudication is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
+This is important as a first step for many database-based analyses.
+For example, we might want to find serum creatinine lab test results, or serum free light chain results.
+A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma (Rajkumar SV, Dimopoulos MA, Palumbo A, *et al.* International Myeloma Working Group updated criteria for the diagnosis of multiple myeloma. Lancet Oncol. 2014 Nov;15(12):e538-48.).
+Thus, it's natural to look for serum creatinine lab results.
+But this is not simple.
+If we search for "creatinine" in the EHR's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
+If we make the query more specific - say, "creatinine" followed by "serum" - we get a much more specific list (64 result types), but many true positives are missed.
+Bottom line: even for a simple lab like serum creatinine, to find all the serum creatinine lab results in the VA's EHR, we - or someone - need to do a careful process of adjudication.
 
-- A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma (Rajkumar SV, Dimopoulos MA, Palumbo A, *et al.* International Myeloma Working Group updated criteria for the diagnosis of multiple myeloma. Lancet Oncol. 2014 Nov;15(12):e538-48.).
-- Thus, it's natural to look for serum creatinine lab results. But this is not simple. If we search for "creatinine" in the EHR's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
-- If we make the query more specific - say, "creatinine" followed by "serum" - we get a much more specific list (64 result types), but many true positives are missed.
-- Bottom line: even for a simple lab like serum creatinine, to find all the serum creatinine lab results in the VA's EHR, we - or someone - need to do a careful process of adjudication.
+Our current process is designed to harmonize test results from 144 independent clinical laboratories.
+It relies on subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
+Database technicians pull candidate record types into Excel.
+Then two SMEs (MDs) label every existing record type, evaluating for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, value ranges, and laboratory test names.
+SMEs generally accomplish this using a spreadsheet that can be sorted and filtered. (Raju SP, Ho Y-L, Zimolzak AJ, Katcher B, Cho K, Gagnon DR. Validation of Laboratory Values in a Heterogeneous Healthcare System: The US Veterans Affairs Experience. 31st International Conference on Pharmacoepidemiology & Therapeutic Risk Management (ICPE). Boston; 8/22-26/2015.)
+SMEs resolve disagreements.
+DB ids and labels of "yes"- and "no"-labeled record types are entered in new DB table as an "adjudicated concept".
+The spreadsheet is kept as documentation.
+Several drawbacks exist.
+The process is time-consuming and hard to scale.
+The adjudicated concept goes out-of-date as new record types are added.
+Finally, it is hard for the end-user to understand, validate, or adapt adjudicated concept
 
-- Current process
-    - Our current process is designed to harmonize test results from 144 independent clinical laboratories.
-    - It relies on subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
-    - Database technicians pull candidate record types into Excel.
-    - then two SMEs (MDs) label every existing record type, evaluating for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, value ranges, and laboratory test names.
-    - SMEs generally accomplish this using a spreadsheet that can be sorted and filtered. (Raju SP, Ho Y-L, Zimolzak AJ, Katcher B, Cho K, Gagnon DR. Validation of Laboratory Values in a Heterogeneous Healthcare System: The US Veterans Affairs Experience. 31st International Conference on Pharmacoepidemiology & Therapeutic Risk Management (ICPE). Boston; 8/22-26/2015.)
-    - SMEs resolve disagreements.
-    - DB ids and labels of "yes"- and "no"-labeled record types are entered in new DB table as an "adjudicated concept".
-    - The spreadsheet is kept as documentation.
-    - Drawbacks:
-        - Time-consuming, hard to scale
-        - Adjudicated concept goes out-of-date as new record types are added
-        - Hard for end-user to understand, validate, or adapt adjudicated concept
-
-- Related to a bunch of other problems.
-    - *OMOP (or other data models)*
-    - The LOINC standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. (Khan AN, Griffith SP, Moore C, Russell D, Rosario AC Jr, Bertolli J. Standardizing laboratory data by mapping to LOINC. J Am Med Inform Assoc. 2006 May-Jun;13(3):353-5.)
-    - Mappings of local laboratory tests to LOINC may be erroneous, as well (Lin MC, Vreeman DJ, McDonald CJ, Huff SM. Correctness of Voluntary LOINC Mapping for Laboratory Tests in Three Large Institutions. AMIA Annu Symp Proc. 2010 Nov 13;2010:447-51.).
-    - Previous authors have faced similar lab result harmonization problems. For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. (Raebel MA, Haynes K, Woodworth TS, Saylor G, Cavagnaro E, Coughlin KO, Curtis LH, Weiner MG, Archdeacon P, Brown JS. Electronic clinical laboratory test results data tables: lessons from Mini-Sentinel. Pharmacoepidemiol Drug Saf. 2014 Jun;23(6):609-18.)
-    - *non medicine stuff? Tamr etc?? & 1 other?* (Held, Stonebraker, Davenport, Ilyas, Brodie, Palmer, Markarian. Getting Data Right. 2016. O'Reilly Media, Sebastopol, CA.)
-    - *HSR-DATA list search*
+This is related to multiple other problems and prior work.
+*OMOP (or other data models) [needs expansion on this item].*
+The LOINC standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. (Khan AN, Griffith SP, Moore C, Russell D, Rosario AC Jr, Bertolli J. Standardizing laboratory data by mapping to LOINC. J Am Med Inform Assoc. 2006 May-Jun;13(3):353-5.)
+Mappings of local laboratory tests to LOINC may be erroneous, as well (Lin MC, Vreeman DJ, McDonald CJ, Huff SM. Correctness of Voluntary LOINC Mapping for Laboratory Tests in Three Large Institutions. AMIA Annu Symp Proc. 2010 Nov 13;2010:447-51.).
+Previous authors have faced similar lab result harmonization problems.
+For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. (Raebel MA, Haynes K, Woodworth TS, Saylor G, Cavagnaro E, Coughlin KO, Curtis LH, Weiner MG, Archdeacon P, Brown JS. Electronic clinical laboratory test results data tables: lessons from Mini-Sentinel. Pharmacoepidemiol Drug Saf. 2014 Jun;23(6):609-18.)
+*non medicine stuff? Tamr etc?? & 1 other? [needs expansion]* (Held, Stonebraker, Davenport, Ilyas, Brodie, Palmer, Markarian. Getting Data Right. 2016. O'Reilly Media, Sebastopol, CA.)
+*HSR-DATA list search [needs expansion]*
 
 Objective
 --------
 
-Our objective is to design and build a system that allows clinical researchers using VA data to quickly and reliably adjudicate clinical concepts such as lab test results. We do so by taking advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques. In particular, we use active learning and interactive feature engineering to speed up adjudication. Our tools is interactive and UI focused - the expert labels examples, can also specify features, rules, synthetic examples.
+Our objective is to design and build a system that allows clinical researchers using VA data to quickly and reliably adjudicate clinical concepts such as lab test results.
+We do so by taking advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
+In particular, we use active learning and interactive feature engineering to speed up adjudication.
+Our tools is interactive and UI focused - the expert labels examples, can also specify features, rules, synthetic examples.
 
 Materials and Methods
 --------
@@ -87,6 +91,7 @@ These datasets, and basic information about them, are shown in Table 1.
 * The number of examples overall
 * The number of examples labeled positive and negative
 ]
+
 We compared the performance of three algorithms in the context of this basic system: Logistic regression with an l1 penalty (Lasso), support vector machines (SVM), and random forests. 
 We used 10-fold cross validation to evaluate the accuracy of the system using each algorithm.
 Results are shown in Figure 1.
@@ -140,23 +145,22 @@ We timed how long it took to label using each tool. Results are...
 We looked at the concordance for each tool...
 We plotted learning curves...
 
-# - Bag-of-words for test name and other descriptors (topography, component, specimen)
-# - Categorical encoding for station (hospital), VISN (region), lab test units, LOINC code
-# - Numerical encoding of n (number of results of this type), min, max, percentile info
-# - Kolmogorov-Smirnov statistic for results' distribution compared to the distribution of all positive training  examples' results' distribution.
+Stuff to remove?
+--------
 
-# Talk about the web framework
+- Bag-of-words for test name and other descriptors (topography, component, specimen)
+- Categorical encoding for station (hospital), VISN (region), lab test units, LOINC code
+- Numerical encoding of n (number of results of this type), min, max, percentile info
+- Kolmogorov-Smirnov statistic for results' distribution compared to the distribution of all positive training  examples' results' distribution.
 
-# UI
-
-# Workflow for using this tool
-
-# Methodology for measuring the difference in speed
-
-# Logging functionality
+Talk about the web framework.
+UI.
+Workflow for using this tool.
+Methodology for measuring the difference in speed.
+Logging functionality.
 
 Results
-========
+--------
 
 We should have some results that relate to the inherent idea
 
@@ -178,12 +182,11 @@ With Random Forests, the convergence is even better:
 We should have three plots:
 
 Discussion
-========
+--------
 
 In the future, can adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
 
 Conclusion
-========
-
+--------
 
 [Schein and Ungar, 2007] Andrew I. Schein and Lyle H. Ungar. Active learning for logistic regression: an evaluation. Machine Learning (2007) 68: 235–265. https://link.springer.com/content/pdf/10.1007/s10994-007-5019-5.pdf
