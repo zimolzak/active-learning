@@ -3,7 +3,7 @@ Clinical Concept Adjudication via Active Machine Learning
 
 Fillmore, Zimolzak, others
 
-Cf requirements for a "brief communications" article here: https://academic.oup.com/jamia/pages/General_Instructions
+Cf requirements for a "brief communications" article here: https://academic.oup.com/jamia/pages/General_Instructions . 2000 words, 2 tables, 3 figs.
 
 Abstract
 ========
@@ -26,32 +26,36 @@ Article
 Background and Significance
 --------
 
-Points:
-
 - Clinical concept adjudication is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
 - Important as a first step for many database-based analyses
 - For example, we might want to find serum creatinine lab test results, or serum free light chain results
-    - A criterion to distinguish active from smoldering MM is, per , "serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma". Thus, it's natural to look for serum creatinine lab results. But this is not simple. If we search for "creatinine" in the EHR's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
-    - If we make the query more specific - say, "creatinine" followed by "serum" - we get a much more specific list (64 result types), but many true positives are missed.
-    - Bottom line: even for a simple lab like serum creatinine, to find all the serum creatinine lab results in the VA's EHR, we - or someone - need to do a careful process of adjudication.
+
+- A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma (Rajkumar SV, Dimopoulos MA, Palumbo A, *et al.* International Myeloma Working Group updated criteria for the diagnosis of multiple myeloma. Lancet Oncol. 2014 Nov;15(12):e538-48.).
+- Thus, it's natural to look for serum creatinine lab results. But this is not simple. If we search for "creatinine" in the EHR's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
+- If we make the query more specific - say, "creatinine" followed by "serum" - we get a much more specific list (64 result types), but many true positives are missed.
+- Bottom line: even for a simple lab like serum creatinine, to find all the serum creatinine lab results in the VA's EHR, we - or someone - need to do a careful process of adjudication.
+
 - Current process
-    - Recapitulate lab adjudication protocol (Lab Adjudication Protocol_JAN2016.pdf):
-        - Database technicians pull candidate record types into Excel:
-        - Two MDs label every existing record type (& resolve disagreements):
-        - DB ids and labels of "yes"- and "no"-labeled record types entered in new DB table as "adjudicated concept". (Excel spreadsheet kept as documentation.)
+    - Our current process is designed to harmonize test results from 144 independent clinical laboratories.
+    - It relies on subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
+    - Database technicians pull candidate record types into Excel.
+    - then two SMEs (MDs) label every existing record type, evaluating for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, value ranges, and laboratory test names.
+    - SMEs generally accomplish this using a spreadsheet that can be sorted and filtered. (Raju SP, Ho Y-L, Zimolzak AJ, Katcher B, Cho K, Gagnon DR. Validation of Laboratory Values in a Heterogeneous Healthcare System: The US Veterans Affairs Experience. 31st International Conference on Pharmacoepidemiology & Therapeutic Risk Management (ICPE). Boston; 8/22-26/2015.)
+    - SMEs resolve disagreements.
+    - DB ids and labels of "yes"- and "no"-labeled record types are entered in new DB table as an "adjudicated concept".
+    - The spreadsheet is kept as documentation.
     - Drawbacks:
         - Time-consuming, hard to scale
         - Adjudicated concept goes out-of-date as new record types are added
         - Hard for end-user to understand, validate, or adapt adjudicated concept
+
 - Related to a bunch of other problems.
-    - OMOP
-    - LOINC
-    - **Mini-sentinel** paper(s) (AZ has refs)
-    - non medicine stuff? Tamr etc?? & 1 other?
-    - *note* check refs of the "search EMR paper" refs 10 & 5?? of: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4288074/
-    - david, sara, me, et al poster? and refs of that paper.
-    - HSR-DATA list search
-    - Gagnon paper about dementia (not lab) PMID 24701364 
+    - *OMOP (or other data models)*
+    - The LOINC standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. (Khan AN, Griffith SP, Moore C, Russell D, Rosario AC Jr, Bertolli J. Standardizing laboratory data by mapping to LOINC. J Am Med Inform Assoc. 2006 May-Jun;13(3):353-5.)
+    - Mappings of local laboratory tests to LOINC may be erroneous, as well (Lin MC, Vreeman DJ, McDonald CJ, Huff SM. Correctness of Voluntary LOINC Mapping for Laboratory Tests in Three Large Institutions. AMIA Annu Symp Proc. 2010 Nov 13;2010:447-51.).
+    - Previous authors have faced similar lab result harmonization problems. For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. (Raebel MA, Haynes K, Woodworth TS, Saylor G, Cavagnaro E, Coughlin KO, Curtis LH, Weiner MG, Archdeacon P, Brown JS. Electronic clinical laboratory test results data tables: lessons from Mini-Sentinel. Pharmacoepidemiol Drug Saf. 2014 Jun;23(6):609-18.)
+    - *non medicine stuff? Tamr etc?? & 1 other?* (Held, Stonebraker, Davenport, Ilyas, Brodie, Palmer, Markarian. Getting Data Right. 2016. O'Reilly Media, Sebastopol, CA.)
+    - *HSR-DATA list search*
 
 Objective
 --------
