@@ -3,7 +3,7 @@ Clinical Concept Adjudication via Active Machine Learning
 
 Fillmore, Zimolzak, others
 
-Cf requirements for a "brief communications" article here: https://academic.oup.com/jamia/pages/General_Instructions
+Cf requirements for a "brief communications" article here: https://academic.oup.com/jamia/pages/General_Instructions . 2000 words, 2 tables, 3 figs.
 
 Abstract
 ========
