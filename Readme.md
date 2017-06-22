@@ -30,7 +30,8 @@ Background and Significance
 - Important as a first step for many database-based analyses
 - For example, we might want to find serum creatinine lab test results, or serum free light chain results
 
-- A criterion to distinguish active from smoldering MM is, per , "serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma". Thus, it's natural to look for serum creatinine lab results. But this is not simple. If we search for "creatinine" in the EHR's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
+- A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma (Rajkumar SV, Dimopoulos MA, Palumbo A, *et al.* International Myeloma Working Group updated criteria for the diagnosis of multiple myeloma. Lancet Oncol. 2014 Nov;15(12):e538-48.).
+- Thus, it's natural to look for serum creatinine lab results. But this is not simple. If we search for "creatinine" in the EHR's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
 - If we make the query more specific - say, "creatinine" followed by "serum" - we get a much more specific list (64 result types), but many true positives are missed.
 - Bottom line: even for a simple lab like serum creatinine, to find all the serum creatinine lab results in the VA's EHR, we - or someone - need to do a careful process of adjudication.
 
