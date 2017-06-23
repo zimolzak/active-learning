@@ -46,6 +46,9 @@ The process is time-consuming and hard to scale.
 The adjudicated concept goes out-of-date as new record types are added.
 Finally, it is hard for the end-user to understand, validate, or adapt adjudicated concept
 
+In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
+*Need some more stuff about active learning.*
+
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) [needs expansion on this item].*
 The LOINC standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. (Khan AN, Griffith SP, Moore C, Russell D, Rosario AC Jr, Bertolli J. Standardizing laboratory data by mapping to LOINC. J Am Med Inform Assoc. 2006 May-Jun;13(3):353-5.)
@@ -68,10 +71,11 @@ Materials and Methods
 
 We developed software to speed up the process of adjudication using active machine learning and interactive feature engineering, as follows.
 
+Modeling the response of SMEs
+--------
+
 First, we developed a basic system to build a model for predicting the whether a candidate lab test type is what we are looking for or not.
-Given a set of lab tests that have been labelled as being of interest or not, the system builds a model to predict, for the remaining lab tests, whether they are of interest or not.
-The starting point of this model is the spreadsheet described above, which contains columns with text describing each lab test result, the units of the test, the hospital and region where this test is used, and information about the distribution of results of this lab test. 
-We explored the use of several machine learning algorithms, including L1-regularized logistic regression, Random Forests, and Support Vector Machines.
+Given a set of lab tests that have been labelled as being of interest or not, the system builds a model to predict, for further lab tests, whether they are of interest or not.
 
 We chose the following initial features for use by these algorithms.
 We used a bag-of-words encoding for textual fields like the test name and other descriptors (topography, component, specimen).
@@ -89,11 +93,13 @@ These datasets, and basic information about them, are shown in Table 1.
 * The number of examples labeled positive and negative
 ]
 
-We compared the performance of three algorithms in the context of this basic system: Logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests. 
+We compared the performance of three algorithms in the context of this basic system: logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests. 
 We used 10-fold cross validation to evaluate the accuracy of the system using each algorithm.
 
-Second, we enhanced this basic system with an active learning approach, specifically, a pool-based active learning approach.
-In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
+Active learning
+--------
+
+We enhanced this basic system with a pool-based active learning approach.
 We considered several active learning approaches.
 A baseline approach is to randomly sample the next example to label.
 A simple approach is to choose as the next example to label the example for which the margin between the model's probability of a positive label and that of a negative label is minimized.
@@ -101,26 +107,24 @@ For example, if the system is uncertain about an example's label, so it assigns 
 Another approach is variance reduction, in which the next example is chosen so as to maximially reduce the prediction variance.
 For logistic regression, variance reduction constitutes a stepwise optimal approach to choosing the next example [Schein and Ungar, 2007].
 
-We evaluated the efficacy of these active learning statistics for the purpose of lab adjudication as follows.
+We evaluated the efficacy of these [three?] active learning statistics for the purpose of lab adjudication as follows.
 Using the seven adjudicated datasets summarized in Table 1, we simulated the active learning process under Random Forests and each statistic.
-We plotted learning curves, showing, for each dataset, the 10-fold cross validation accuracy at each step in the active learning process, i.e., after each additional example was labelled (with its previously adjudicated ground truthlabel) in the simulation.
-[Figure 2: Shows the learning curves]
+We plotted learning curves, showing, for each dataset, the 10-fold cross validation accuracy at each step in the active learning process, i.e., after each additional example was labelled (with its previously adjudicated ground truth label) in the simulation.
 
 Operationalizing as web application
 --------
 
-Third, we designed and built a user interface around this enhanced system.
 This interface was designed as a single-page web application, with a front-end written in ReactJS and a back-end written in Python.
 The interface allows users to view both the original table of data elements and the feature matrix that the learning algorithm is based on.
 These tables can be looked at separately or viewied side-by-side.
-The tables can be ordered by any column, including, most importantly, the active learning statistic of interest.
+The tables can be sorted by any column, including, most importantly, the active learning statistic of interest.
 As the user labels examples within the tool's interface, these statistics are recomputed and the table is reordered.
 
 In general, in addition to labelling examples, feature engineering can be quite useful as a way to increase a machine learning system's accuracy quickly.
 In our tool, the feature matrix is initialized as described above for the basic system.
-However, we also provide the user the ability to interact with the feature matrix by adding or removing examples.
+However, we also provide the user the ability to interact with the feature matrix by adding or removing examples.  []
 We allow all features, including, for example, individual features corresponding to a single vocabulary word, to be removed.
-We allow bag-of-word, categorical, or numerical features to be added, both in case they have been previously removed and in case there is a reason to treat a particular data element differently from our default (e.g., treating the lab test name as a categorical variable instead of using a bag-of-words encoding).
+We allow bag-of-words, categorical, or numerical features to be added, both in case they have been previously removed and in case there is a reason to treat a particular data element differently from our default (e.g., treating the lab test name as a categorical variable instead of using a bag-of-words encoding).
 Most important, we allow the user to specify a regular expression relative to a textual column, and create a feature whose value is the count of that regular expression within the column.
 This is useful because sometimes a clinician or other expert can look at a text field and easily formulate a pattern that should be excluded or included; including a feature that matches that pattern can substantially increase the ability of the machine learning system to correctly classify examples.
 For example, [Andy, do you have an example?].
@@ -163,6 +167,7 @@ We dropped SVM from further consideration because it has the worst performance a
  
 Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples.
 
+[Figure 2: Shows the learning curves]
 *insert learning curves fig here* 
 
 With Random Forests, the convergence is even better:
