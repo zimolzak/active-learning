@@ -20,11 +20,8 @@ Abstract
 
 **Conclusion**
 
-Article
-========
-
 Background and Significance
---------
+========
 
 Clinical concept adjudication is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
 This is important as a first step for many database-based analyses.
@@ -59,7 +56,7 @@ For example, the Mini-Sentinel program had to take clinical laboratory results f
 *HSR-DATA list search [needs expansion]*
 
 Objective
---------
+========
 
 Our objective is to design and build a system that allows clinical researchers using VA data to quickly and reliably adjudicate clinical concepts such as lab test results.
 We do so by taking advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
@@ -67,7 +64,7 @@ In particular, we use active learning and interactive feature engineering to spe
 Our tools is interactive and UI focused - the expert labels examples, can also specify features, rules, synthetic examples.
 
 Materials and Methods
---------
+========
 
 We developed software to speed up the process of adjudication using active machine learning and interactive feature engineering, as follows.
 
@@ -92,14 +89,8 @@ These datasets, and basic information about them, are shown in Table 1.
 * The number of examples labeled positive and negative
 ]
 
-We compared the performance of three algorithms in the context of this basic system: Logistic regression with an l1 penalty (Lasso), support vector machines (SVM), and random forests. 
+We compared the performance of three algorithms in the context of this basic system: Logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests. 
 We used 10-fold cross validation to evaluate the accuracy of the system using each algorithm.
-Results are shown in Figure 1.
-[Figure 1: Shows the 10-fold cross validation accuracy]
-As this table shows, the highest accuracy is achieved using Random Forests, with Lasso a close second.
-[Comment: should move this to Results]
-However, Lasso is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
-We dropped SVM from further consideration because it has the worst performance and also is not as easy to interpret its results.
 
 Second, we enhanced this basic system with an active learning approach, specifically, a pool-based active learning approach.
 In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
@@ -115,12 +106,15 @@ Using the seven adjudicated datasets summarized in Table 1, we simulated the act
 We plotted learning curves, showing, for each dataset, the 10-fold cross validation accuracy at each step in the active learning process, i.e., after each additional example was labelled (with its previously adjudicated ground truthlabel) in the simulation.
 [Figure 2: Shows the learning curves]
 
+Operationalizing as web application
+--------
+
 Third, we designed and built a user interface around this enhanced system.
 This interface was designed as a single-page web application, with a front-end written in ReactJS and a back-end written in Python.
 The interface allows users to view both the original table of data elements and the feature matrix that the learning algorithm is based on.
 These tables can be looked at separately or viewied side-by-side.
 The tables can be ordered by any column, including, most importantly, the active learning statistic of interest.
-As the user labels examples within the tool's interfact, these statistics are recomputed and the table is reordered.
+As the user labels examples within the tool's interface, these statistics are recomputed and the table is reordered.
 
 In general, in addition to labelling examples, feature engineering can be quite useful as a way to increase a machine learning system's accuracy quickly.
 In our tool, the feature matrix is initialized as described above for the basic system.
@@ -130,6 +124,9 @@ We allow bag-of-word, categorical, or numerical features to be added, both in ca
 Most important, we allow the user to specify a regular expression relative to a textual column, and create a feature whose value is the count of that regular expression within the column.
 This is useful because sometimes a clinician or other expert can look at a text field and easily formulate a pattern that should be excluded or included; including a feature that matches that pattern can substantially increase the ability of the machine learning system to correctly classify examples.
 For example, [Andy, do you have an example?].
+
+Time savings
+--------
 
 We evaluated the ability of this tool to speed up the adjudication process as follows.
 We first instrumented our tool to record all actions taken within the tool, including labelling examples, sorting the table, and adding features and removing features, along with the time each action was taken.
@@ -142,36 +139,29 @@ For YYY, roles were reverse: AZ adjudicated using our tool first and the SOP sec
 Moreover, the clinicians waited 24 hours between the first and second adjudication.
 These measures were taken to mitigate the advantage of being the second tool used by a clinician for a particular adjudication task.
 We timed how long it took to label using each tool. Results are...
+
 We looked at the concordance for each tool...
 We plotted learning curves...
 
-Stuff to remove?
---------
-
-- Bag-of-words for test name and other descriptors (topography, component, specimen)
-- Categorical encoding for station (hospital), VISN (region), lab test units, LOINC code
-- Numerical encoding of n (number of results of this type), min, max, percentile info
-- Kolmogorov-Smirnov statistic for results' distribution compared to the distribution of all positive training  examples' results' distribution.
-
-Talk about the web framework.
-UI.
-Workflow for using this tool.
-Methodology for measuring the difference in speed.
-Logging functionality.
 
 Results
---------
+========
 
 We should have some results that relate to the inherent idea
 
-
-Using seven datasets that have been adjudicated by experts, we compare three algorithms: Logistic regression with an l1 penalty (Lasso), support vector machines (SVM), and random forests. 
+Using seven datasets that have been adjudicated by experts, we compare three algorithms: Logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests. 
 
 We obtain high 10-fold cross-validation accuracy (Table 1):
 
 *insert table here*
+
+Results are shown in Figure 1.
+[Figure 1: Shows the 10-fold cross validation accuracy.]
+As this table shows, the highest accuracy is achieved using Random Forests, with LASSO a close second.
+However, LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
+We dropped SVM from further consideration because it has the worst performance and also is not as easy to interpret its results.
  
-Using our engineered features with l1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples.
+Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples.
 
 *insert learning curves fig here* 
 
@@ -182,11 +172,16 @@ With Random Forests, the convergence is even better:
 We should have three plots:
 
 Discussion
---------
+========
 
 In the future, can adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
+Limitation? Doesn't tell you "when to stop." Workable for few thousands of rows: SME can sign off on each row. Will be workable for 10,000+ if additional "stopping" criterion developed.
 
 Conclusion
---------
+========
+
+
+References
+========
 
 [Schein and Ungar, 2007] Andrew I. Schein and Lyle H. Ungar. Active learning for logistic regression: an evaluation. Machine Learning (2007) 68: 235–265. https://link.springer.com/content/pdf/10.1007/s10994-007-5019-5.pdf
