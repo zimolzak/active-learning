@@ -122,31 +122,24 @@ As the user labels examples within the tool's interface, these statistics are re
 
 In general, in addition to labelling examples, feature engineering can be quite useful as a way to increase a machine learning system's accuracy quickly.
 In our tool, the feature matrix is initialized as described above for the basic system.
-However, we also provide the user the ability to interact with the feature matrix by adding or removing examples.  []
-We allow all features, including, for example, individual features corresponding to a single vocabulary word, to be removed.
+However, we also allow the user to adding or removing any features, including, for example, individual features corresponding to a single vocabulary word.
 We allow bag-of-words, categorical, or numerical features to be added, both in case they have been previously removed and in case there is a reason to treat a particular data element differently from our default (e.g., treating the lab test name as a categorical variable instead of using a bag-of-words encoding).
 Most important, we allow the user to specify a regular expression relative to a textual column, and create a feature whose value is the count of that regular expression within the column.
 This is useful because sometimes a clinician or other expert can look at a text field and easily formulate a pattern that should be excluded or included; including a feature that matches that pattern can substantially increase the ability of the machine learning system to correctly classify examples.
-For example, [Andy, do you have an example?].
+For example, if the SME is interested in blood hemoglobin lab values, it is likely that any laboratory test names containing "free" should be excluded, because *FREE HGB* refers to a laboratory test different from the one of interest.
 
 Time savings
 --------
 
-We evaluated the ability of this tool to speed up the adjudication process as follows.
-We first instrumented our tool to record all actions taken within the tool, including labelling examples, sorting the table, and adding features and removing features, along with the time each action was taken.
-We used this instrumentation to evaluate the speed and quality with which adjudication can be done using the tool, as follows.
-We considered the adjudication of two target lab tests, XXX and YYY.
-For each target lab test, we constructed a table of candidate examples using the previous Standard Operating Protocol described above.
-Two clinicians (AZ and DG) adjudicated the results, using the previous SOP and our tool.
+To evaluate the ability of this tool to speed up the adjudication process, we added logging functionality.
+Our tool records all actions taken by the user (including labelling examples, sorting the table, and adding or removing features) along with a time stamp.
+XXX and YYY were selected as lab tests for two clinicians adjudicate for the purposes of testing.
 For XXX, AZ adjudicated using the SOP first and our tool second, and DG adjudicated using our tool first and the SOP second.
-For YYY, roles were reverse: AZ adjudicated using our tool first and the SOP second, and DG adjudicated using the SOP first and our tool second.
-Moreover, the clinicians waited 24 hours between the first and second adjudication.
-These measures were taken to mitigate the advantage of being the second tool used by a clinician for a particular adjudication task.
-We timed how long it took to label using each tool. Results are...
-
-We looked at the concordance for each tool...
-We plotted learning curves...
-
+For YYY, roles were reversed: AZ adjudicated using our tool first and the SOP second, and DG adjudicated using the SOP first and our tool second.
+Moreover, the clinicians waited 24 hours between the first and second adjudication, to mitigate any advantage from adjudicating the same lab test twice.
+We timed how long it took to label using each tool.
+Inter-clinician agreement for each combination of tool and lab test were measured by Cohen's kappa.
+Learning curves were also plotted for each 
 
 Results
 ========
