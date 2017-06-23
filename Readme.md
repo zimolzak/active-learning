@@ -169,6 +169,8 @@ With Random Forests, the convergence is even better:
 
 We should have three plots:
 
+Feature importance: feat w/ highest coefficient was [possibly K-S statistic].
+
 Discussion
 ========
 
