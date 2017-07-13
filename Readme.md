@@ -47,7 +47,7 @@ The adjudicated concept goes out-of-date as new record types are added.
 Finally, it is hard for the end-user to understand, validate, or adapt adjudicated concept
 
 In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
-*Need some more stuff about active learning.*
+Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [PMID: 28477277], screening citations to include in systematic reviews [PMID: 28648605], clinical text processing [26253132 22707743 24853067], and phenotyping based on text and billing codes [23851443].
 
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) [needs expansion on this item].*
