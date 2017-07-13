@@ -48,6 +48,10 @@ Finally, it is hard for the end-user to understand, validate, or adapt adjudicat
 
 In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
 Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [PMID: 28477277], screening citations to include in systematic reviews [PMID: 28648605], clinical text processing [26253132 22707743 24853067], and phenotyping based on text and billing codes [23851443].
+*Cohn DA, Atlas LE, Ladner RE. Improving generalization with active learning. Machine Learning 15(2):201-221, 1994.*
+*Atlas LE, Cohn DA, Ladner RE. Training Connectionist Networks with Queries and Selective Sampling. NIPS 1989.*
+*Settles, Burr (2010), "Active Learning Literature Survey" (PDF), Computer Sciences Technical Report 1648. University of Wisconsin–Madison.*
+
 
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) [needs expansion on this item].*
