@@ -26,7 +26,7 @@ Background and Significance
 Clinical concept adjudication is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
 This is important as a first step for many database-based analyses.
 For example, we might want to find serum creatinine lab test results, or serum free light chain results.
-A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma (Rajkumar SV, Dimopoulos MA, Palumbo A, *et al.* International Myeloma Working Group updated criteria for the diagnosis of multiple myeloma. Lancet Oncol. 2014 Nov;15(12):e538-48.).
+A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma (Rajkumar).
 Thus, it's natural to look for serum creatinine lab results.
 But this is not simple.
 If we search for "creatinine" in the EHR's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
@@ -37,7 +37,7 @@ Our current process is designed to harmonize test results from 144 independent c
 It relies on subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
 Database technicians pull candidate record types into Excel.
 Then two SMEs (MDs) label every existing record type, evaluating for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, value ranges, and laboratory test names.
-SMEs generally accomplish this using a spreadsheet that can be sorted and filtered. (Raju SP, Ho Y-L, Zimolzak AJ, Katcher B, Cho K, Gagnon DR. Validation of Laboratory Values in a Heterogeneous Healthcare System: The US Veterans Affairs Experience. 31st International Conference on Pharmacoepidemiology & Therapeutic Risk Management (ICPE). Boston; 8/22-26/2015.)
+SMEs generally accomplish this using a spreadsheet that can be sorted and filtered. (Raju)
 SMEs resolve disagreements.
 DB ids and labels of "yes"- and "no"-labeled record types are entered in new DB table as an "adjudicated concept".
 The spreadsheet is kept as documentation.
@@ -48,10 +48,7 @@ Finally, it is hard for the end-user to understand, validate, or adapt adjudicat
 
 In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
 Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [PMID: 28477277], screening citations to include in systematic reviews [PMID: 28648605], clinical text processing [26253132 22707743 24853067], and phenotyping based on text and billing codes [23851443].
-*Cohn DA, Atlas LE, Ladner RE. Improving generalization with active learning. Machine Learning 15(2):201-221, 1994.*
-*Atlas LE, Cohn DA, Ladner RE. Training Connectionist Networks with Queries and Selective Sampling. NIPS 1989.*
-*Settles, Burr (2010), "Active Learning Literature Survey" (PDF), Computer Sciences Technical Report 1648. University of Wisconsin–Madison.*
-
+Other refs: Cohn; Atlas; Settles.
 
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) [needs expansion on this item].*
@@ -189,3 +186,25 @@ References
 ========
 
 [Schein and Ungar, 2007] Andrew I. Schein and Lyle H. Ungar. Active learning for logistic regression: an evaluation. Machine Learning (2007) 68: 235–265. https://link.springer.com/content/pdf/10.1007/s10994-007-5019-5.pdf
+
+Rajkumar SV, Dimopoulos MA, Palumbo A, *et al.* International Myeloma Working Group updated criteria for the diagnosis of multiple myeloma. Lancet Oncol. 2014 Nov;15(12):e538-48.
+
+Raju SP, Ho Y-L, Zimolzak AJ, Katcher B, Cho K, Gagnon DR. Validation of Laboratory Values in a Heterogeneous Healthcare System: The US Veterans Affairs Experience. 31st International Conference on Pharmacoepidemiology & Therapeutic Risk Management (ICPE). Boston; 8/22-26/2015.
+
+PMID: 28477277
+
+PMID: 28648605
+
+26253132
+
+22707743
+
+24853067
+
+23851443
+
+*Cohn DA, Atlas LE, Ladner RE. Improving generalization with active learning. Machine Learning 15(2):201-221, 1994.*
+
+*Atlas LE, Cohn DA, Ladner RE. Training Connectionist Networks with Queries and Selective Sampling. NIPS 1989.*
+
+*Settles, Burr (2010), "Active Learning Literature Survey" (PDF), Computer Sciences Technical Report 1648. University of Wisconsin–Madison.*
