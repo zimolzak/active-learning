@@ -48,7 +48,7 @@ Finally, it is hard for the end-user to understand, validate, or adapt adjudicat
 
 In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
 Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [Feng], screening citations to include in systematic reviews [Kontonatsios], clinical text processing [Kholghi] [Figueroa] [Nguyen], and phenotyping based on text and billing codes [Chen].
-Other refs: Cohn; Atlas; Settles.
+Other refs: [Cohn] [Atlas] [Settles].
 
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) (needs expansion on this item).*
@@ -192,17 +192,17 @@ Rajkumar SV, Dimopoulos MA, Palumbo A, *et al.* International Myeloma Working Gr
 
 Raju SP, Ho Y-L, Zimolzak AJ, Katcher B, Cho K, Gagnon DR. Validation of Laboratory Values in a Heterogeneous Healthcare System: The US Veterans Affairs Experience. 31st International Conference on Pharmacoepidemiology & Therapeutic Risk Management (ICPE). Boston; 8/22-26/2015.
 
-PMID: 28477277. Feng Y, Guo Z, Dong Z, Zhou XY, Kwok KW, Ernst S, Lee SL. An efficient cardiac mapping strategy for radiofrequency catheter ablation with active learning. Int J Comput Assist Radiol Surg. 2017 Jul;12(7):1199-1207.
+Feng Y, Guo Z, Dong Z, Zhou XY, Kwok KW, Ernst S, Lee SL. An efficient cardiac mapping strategy for radiofrequency catheter ablation with active learning. Int J Comput Assist Radiol Surg. 2017 Jul;12(7):1199-1207. PMID: 28477277.
 
-PMID: 28648605. Kontonatsios G, Brockmeier AJ, Przybyła P, McNaught J, Mu T, Goulermas JY, Ananiadou S. A semi-supervised approach using label propagation to support citation screening. J Biomed Inform. 2017 Aug;72:67-76.
+Kontonatsios G, Brockmeier AJ, Przybyła P, McNaught J, Mu T, Goulermas JY, Ananiadou S. A semi-supervised approach using label propagation to support citation screening. J Biomed Inform. 2017 Aug;72:67-76. PMID: 28648605.
 
-26253132 Kholghi M, Sitbon L, Zuccon G, Nguyen A. Active learning: a step towards automating medical concept extraction. J Am Med Inform Assoc. 2016 Mar;23(2):289-96. 
+Kholghi M, Sitbon L, Zuccon G, Nguyen A. Active learning: a step towards automating medical concept extraction. J Am Med Inform Assoc. 2016 Mar;23(2):289-96. PMID 26253132.
 
-22707743 Figueroa RL, Zeng-Treitler Q, Ngo LH, Goryachev S, Wiechmann EP. Active learning for clinical text classification: is it better than random sampling? J Am Med Inform Assoc. 2012 Sep-Oct;19(5):809-16.
+Figueroa RL, Zeng-Treitler Q, Ngo LH, Goryachev S, Wiechmann EP. Active learning for clinical text classification: is it better than random sampling? J Am Med Inform Assoc. 2012 Sep-Oct;19(5):809-16. PMID 22707743.
 
-24853067 Nguyen DH, Patrick JD. Supervised machine learning and active learning in classification of radiology reports. J Am Med Inform Assoc. 2014 Sep-Oct;21(5):893-901.
+Nguyen DH, Patrick JD. Supervised machine learning and active learning in classification of radiology reports. J Am Med Inform Assoc. 2014 Sep-Oct;21(5):893-901. PMID 24853067.
 
-23851443 Chen Y, Carroll RJ, Hinz ER, Shah A, Eyler AE, Denny JC, Xu H. Applying active learning to high-throughput phenotyping algorithms for electronic health records data. J Am Med Inform Assoc. 2013 Dec;20(e2):e253-9. 
+Chen Y, Carroll RJ, Hinz ER, Shah A, Eyler AE, Denny JC, Xu H. Applying active learning to high-throughput phenotyping algorithms for electronic health records data. J Am Med Inform Assoc. 2013 Dec;20(e2):e253-9. PMID 23851443.
 
 Cohn DA, Atlas LE, Ladner RE. Improving generalization with active learning. Machine Learning 15(2):201-221, 1994.*
 
