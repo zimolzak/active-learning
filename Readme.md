@@ -47,16 +47,16 @@ The adjudicated concept goes out-of-date as new record types are added.
 Finally, it is hard for the end-user to understand, validate, or adapt adjudicated concept
 
 In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
-Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [PMID: 28477277], screening citations to include in systematic reviews [PMID: 28648605], clinical text processing [26253132 22707743 24853067], and phenotyping based on text and billing codes [23851443].
+Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [Feng], screening citations to include in systematic reviews [Kontonatsios], clinical text processing [Kholghi] [Figueroa] [Nguyen], and phenotyping based on text and billing codes [Chen].
 Other refs: Cohn; Atlas; Settles.
 
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) [needs expansion on this item].*
-The LOINC standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. (Khan)
-Mappings of local laboratory tests to LOINC may be erroneous, as well (Lin).
+The LOINC standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. [Khan]
+Mappings of local laboratory tests to LOINC may be erroneous, as well [Lin].
 Previous authors have faced similar lab result harmonization problems.
-For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. (Raebel)
-*non medicine stuff? Tamr etc?? & 1 other? [needs expansion]* (Held)
+For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. [Raebel]
+*non medicine stuff? Tamr etc?? & 1 other? [needs expansion]* [Held]
 *HSR-DATA list search [needs expansion]*
 
 Objective
