@@ -26,7 +26,7 @@ Background and Significance
 Clinical concept adjudication is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
 This is important as a first step for many database-based analyses.
 For example, we might want to find serum creatinine lab test results, or serum free light chain results.
-A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma (Rajkumar).
+A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma [Rajkumar].
 Thus, it's natural to look for serum creatinine lab results.
 But this is not simple.
 If we search for "creatinine" in the EHR's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
@@ -37,7 +37,7 @@ Our current process is designed to harmonize test results from 144 independent c
 It relies on subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
 Database technicians pull candidate record types into Excel.
 Then two SMEs (MDs) label every existing record type, evaluating for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, value ranges, and laboratory test names.
-SMEs generally accomplish this using a spreadsheet that can be sorted and filtered. (Raju)
+SMEs generally accomplish this using a spreadsheet that can be sorted and filtered. [Raju]
 SMEs resolve disagreements.
 DB ids and labels of "yes"- and "no"-labeled record types are entered in new DB table as an "adjudicated concept".
 The spreadsheet is kept as documentation.
