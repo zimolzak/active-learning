@@ -26,7 +26,7 @@ Background and Significance
 Clinical concept adjudication is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
 This is important as a first step for many database-based analyses.
 For example, we might want to find serum creatinine lab test results, or serum free light chain results.
-A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL [173 mmol/L] and renal insufficiency attributable to myeloma [Rajkumar].
+A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL (173 mmol/L) and renal insufficiency attributable to myeloma [Rajkumar].
 Thus, it's natural to look for serum creatinine lab results.
 But this is not simple.
 If we search for "creatinine" in the EHR's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
@@ -51,13 +51,13 @@ Active learning has been used in a number of fields in medicine, such as selecti
 Other refs: Cohn; Atlas; Settles.
 
 This is related to multiple other problems and prior work.
-*OMOP (or other data models) [needs expansion on this item].*
+*OMOP (or other data models) (needs expansion on this item).*
 The LOINC standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. [Khan]
 Mappings of local laboratory tests to LOINC may be erroneous, as well [Lin].
 Previous authors have faced similar lab result harmonization problems.
 For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. [Raebel]
-*non medicine stuff? Tamr etc?? & 1 other? [needs expansion]* [Held]
-*HSR-DATA list search [needs expansion]*
+*non medicine stuff? Tamr etc?? & 1 other? (needs expansion)* [Held]
+*HSR-DATA list search (needs expansion)*
 
 Objective
 ========
@@ -86,13 +86,13 @@ We used as-is the numerical fields describing the distribution of the associated
 Additionally, we added as a feature a Kolmogorov-Smirnov statistic that compares, for an individual example lab test, the distribution of that test's results relative to the overall distribution of all positive training examples' results.
 
 We evaluated this basic system using seven datasets that had been already adjudicated by VA experts.
-These datasets, and basic information about them, are shown in Table 1.
-[Table 1 should show:
+These datasets, and basic information about them, are shown in Table __datasets__.
+
+Table __datasets__ should show:
 * The target we are looking for, e.g., HGB, 
 * If possible, the query or queries used to generate candidates
 * The number of examples overall
 * The number of examples labeled positive and negative
-]
 
 We compared the performance of three algorithms in the context of this basic system: logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests. 
 We used 10-fold cross validation to evaluate the accuracy of the system using each algorithm.
@@ -108,8 +108,8 @@ For example, if the system is uncertain about an example's label, so it assigns 
 Another approach is variance reduction, in which the next example is chosen so as to maximially reduce the prediction variance.
 For logistic regression, variance reduction constitutes a stepwise optimal approach to choosing the next example [Schein].
 
-We evaluated the efficacy of these [three?] active learning statistics for the purpose of lab adjudication as follows.
-Using the seven adjudicated datasets summarized in Table 1, we simulated the active learning process under Random Forests and each statistic.
+We evaluated the efficacy of these (three?) active learning statistics for the purpose of lab adjudication as follows.
+Using the seven adjudicated datasets summarized in Table __datasets__, we simulated the active learning process under Random Forests and each statistic.
 We plotted learning curves, showing, for each dataset, the 10-fold cross validation accuracy at each step in the active learning process, i.e., after each additional example was labelled (with its previously adjudicated ground truth label) in the simulation.
 
 Operationalizing as web application
@@ -149,28 +149,29 @@ We should have some results that relate to the inherent idea
 
 Using seven datasets that have been adjudicated by experts, we compare three algorithms: Logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests. 
 
-We obtain high 10-fold cross-validation accuracy (Table 1):
+We obtain high 10-fold cross-validation accuracy (Table __crossvaltable__):
 
 *insert table here*
 
-Results are shown in Figure 1.
-[Figure 1: Shows the 10-fold cross validation accuracy.]
+Results are shown in Figure __crossvalfig__.
+
+*Figure shows the 10-fold cross validation accuracy.*
+
 As this table shows, the highest accuracy is achieved using Random Forests, with LASSO a close second.
 However, LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
 We dropped SVM from further consideration because it has the worst performance and also is not as easy to interpret its results.
  
-Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples.
+Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure __lassocurve__).
 
-[Figure 2: Shows the learning curves]
 *insert learning curves fig here* 
 
-With Random Forests, the convergence is even better:
+With Random Forests, the convergence is even better (Figure __rfcurve__).
 
 *insert another learning curves fig here* 
 
 We should have three plots:
 
-Feature importance: feat w/ highest coefficient was [possibly K-S statistic].
+Feature importance: feat w/ highest coefficient was (possibly K-S statistic).
 
 Discussion
 ========
