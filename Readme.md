@@ -44,7 +44,7 @@ The spreadsheet is kept as documentation.
 Several drawbacks exist.
 The process is time-consuming and hard to scale.
 The adjudicated concept goes out-of-date as new record types are added.
-Finally, it is hard for the end-user to understand, validate, or adapt adjudicated concept
+Finally, it is hard for the end-user to understand, validate, or adapt adjudicated concept.
 
 In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
 Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [Feng], screening citations to include in systematic reviews [Kontonatsios], clinical text processing [Kholghi] [Figueroa] [Nguyen], and phenotyping based on text and billing codes [Chen].
@@ -140,14 +140,14 @@ For YYY, roles were reversed: AZ adjudicated using our tool first and the SOP se
 Moreover, the clinicians waited 24 hours between the first and second adjudication, to mitigate any advantage from adjudicating the same lab test twice.
 We timed how long it took to label using each tool.
 Inter-clinician agreement for each combination of tool and lab test were measured by Cohen's kappa.
-Learning curves were also plotted for each 
+Learning curves were also plotted for each....
 
 Results
 ========
 
-We should have some results that relate to the inherent idea
+We should have some results that relate to the inherent idea.
 
-Using seven datasets that have been adjudicated by experts, we compare three algorithms: Logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests. 
+Using seven datasets that have been adjudicated by experts, we compare three algorithms: Logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests.
 
 We obtain high 10-fold cross-validation accuracy (Table __crossvaltable__):
 
@@ -163,11 +163,11 @@ We dropped SVM from further consideration because it has the worst performance a
  
 Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure __lassocurve__).
 
-*insert learning curves fig here* 
+*insert learning curves fig here*
 
 With Random Forests, the convergence is even better (Figure __rfcurve__).
 
-*insert another learning curves fig here* 
+*insert another learning curves fig here*
 
 We should have three plots:
 
@@ -177,7 +177,9 @@ Discussion
 ========
 
 In the future, can adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
-Limitation? Doesn't tell you "when to stop." Workable for few thousands of rows: SME can sign off on each row. Will be workable for 10,000+ if additional "stopping" criterion developed.
+Limitation: Doesn't tell you "when to stop."
+Workable for few thousands of rows: SME can sign off on each row.
+Will be workable for 10,000+ if additional "stopping" criterion developed.
 
 Conclusion
 ========
