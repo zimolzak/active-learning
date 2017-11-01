@@ -107,7 +107,7 @@ We considered several active learning approaches.
 A baseline approach is to randomly sample the next example to label.
 A simple approach is to choose as the next example to label the example for which the margin between the model's probability of a positive label and that of a negative label is minimized.
 For example, if the system is uncertain about an example's label, so it assigns the probability of a positive label to be 51 percent and that of a negative label to be 49 percent, then the margin is 2 percent; in contrast, the margin if the probability of a positive label is 99 percent and that of a negative label is 1 percent is 98 percent.
-Another approach is variance reduction, in which the next example is chosen so as to maximially reduce the prediction variance.
+Another approach is variance reduction, in which the next example is chosen so as to maximally reduce the prediction variance.
 For logistic regression, variance reduction constitutes a stepwise optimal approach to choosing the next example [Schein].
 
 We evaluated the efficacy of these (three?) active learning statistics for the purpose of lab adjudication as follows.
@@ -119,7 +119,7 @@ Operationalizing as web application
 
 This interface was designed as a single-page web application, with a front-end written in ReactJS and a back-end written in Python.
 The interface allows users to view both the original table of data elements and the feature matrix that the learning algorithm is based on.
-These tables can be looked at separately or viewied side-by-side.
+These tables can be looked at separately or viewed side-by-side.
 The tables can be sorted by any column, including, most importantly, the active learning statistic of interest.
 As the user labels examples within the tool's interface, these statistics are recomputed and the table is reordered.
 
