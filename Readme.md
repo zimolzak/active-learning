@@ -28,12 +28,12 @@ Background and Significance
 Clinical concept adjudication is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
 This is important as a first step for many database-based analyses.
 For example, we might want to find serum creatinine lab test results, or serum free light chain results.
-A criterion to distinguish active from smoldering MM is serum creatinine level > 2 mg/dL (173 mmol/L) and renal insufficiency attributable to myeloma [Rajkumar].
+A criterion to distinguish active from smoldering myeloma is serum creatinine level > 2 mg/dL (173 mmol/L) and renal insufficiency attributable to myeloma [Rajkumar].
 Thus, it's natural to look for serum creatinine lab results.
 But this is not simple.
-If we search for "creatinine" in the EHR's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
+If we search for "creatinine" in the data warehouse's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
 If we make the query more specific - say, "creatinine" followed by "serum" - we get a much more specific list (64 result types), but many true positives are missed.
-Bottom line: even for a simple lab like serum creatinine, to find all the serum creatinine lab results in the VA's EHR, we - or someone - need to do a careful process of adjudication.
+Bottom line: even for a simple lab like serum creatinine, to find all the serum creatinine lab results in the VA's electronic health record (EHR), we - or someone - need to do a careful process of adjudication.
 
 Our current process is designed to harmonize test results from 144 independent clinical laboratories.
 It relies on subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
@@ -41,7 +41,7 @@ Database technicians pull candidate record types into Excel.
 Then two SMEs (MDs) label every existing record type, evaluating for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, value ranges, and laboratory test names.
 SMEs generally accomplish this using a spreadsheet that can be sorted and filtered. [Raju]
 SMEs resolve disagreements.
-DB ids and labels of "yes"- and "no"-labeled record types are entered in new DB table as an "adjudicated concept".
+Database IDs and labels of "yes"- and "no"-labeled record types are entered in new database table as an "adjudicated concept".
 The spreadsheet is kept as documentation.
 Several drawbacks exist.
 The process is time-consuming and hard to scale.
@@ -54,7 +54,7 @@ Other refs: [Cohn] [Atlas] [Settles].
 
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) (needs expansion on this item).*
-The LOINC standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. [Khan]
+The Logical Observation Identifiers Names and Codes (LOINC) standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. [Khan]
 Mappings of local laboratory tests to LOINC may be erroneous, as well [Lin].
 Previous authors have faced similar lab result harmonization problems.
 For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. [Raebel]
@@ -67,7 +67,7 @@ Objective
 Our objective is to design and build a system that allows clinical researchers using VA data to quickly and reliably adjudicate clinical concepts such as lab test results.
 We do so by taking advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
 In particular, we use active learning and interactive feature engineering to speed up adjudication.
-Our tools is interactive and UI focused - the expert labels examples, can also specify features, rules, synthetic examples.
+Our tools is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
 
 Materials and Methods
 ========
@@ -91,12 +91,12 @@ We evaluated this basic system using seven datasets that had been already adjudi
 These datasets, and basic information about them, are shown in Table ~~tableDatasets.
 
 Table ~~tableDatasets should show:
-* The target we are looking for, e.g., HGB, 
+* The target we are looking for, e.g. hemoglobin
 * If possible, the query or queries used to generate candidates
 * The number of examples overall
 * The number of examples labeled positive and negative
 
-We compared the performance of three algorithms in the context of this basic system: logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests. 
+We compared the performance of three algorithms in the context of this basic system: logistic regression with an L1 penalty (also known as the least absolute shrinkage and selection operator, or LASSO), support vector machines (SVM), and random forests. 
 We used 10-fold cross validation to evaluate the accuracy of the system using each algorithm.
 
 Active learning
