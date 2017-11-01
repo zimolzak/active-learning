@@ -12,7 +12,8 @@ Abstract
 
 **Objective:** Our objective is to design and build a system that allows clinical researchers using VA data to quickly and reliably adjudicate clinical concepts such as lab test results.
 
-**Materials and Methods.** We take advantage of the fact that adjudication is a binary classification task and, as such, it can be scaled up using machine learning techniques. In particular, we use active learning and interactive feature engineering to speed up adjudication.
+**Materials and Methods.** We take advantage of the fact that adjudication is a binary classification task and, as such, it can be scaled up using machine learning techniques.
+In particular, we use active learning and interactive feature engineering to speed up adjudication.
 
 **Results.** We find ...
 
@@ -145,33 +146,16 @@ Learning curves were also plotted for each....
 Results
 ========
 
-We should have some results that relate to the inherent idea.
-
 Using seven datasets that have been adjudicated by experts, we compare three algorithms: Logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests.
-
-We obtain high 10-fold cross-validation accuracy (Table __crossvaltable__):
-
-*insert table here*
-
-Results are shown in Figure __crossvalfig__.
-
-*Figure shows the 10-fold cross validation accuracy.*
-
-As this table shows, the highest accuracy is achieved using Random Forests, with LASSO a close second.
+We obtain high 10-fold cross-validation accuracy (Table __crossvaltable__).
+Further results are shown in Figure __crossvalfig__.
+The highest accuracy is achieved using Random Forests, with LASSO a close second.
 However, LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
-We dropped SVM from further consideration because it has the worst performance and also is not as easy to interpret its results.
+We dropped SVM from further consideration because it has the worst performance, and it is not as easy to interpret its results.
  
 Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure __lassocurve__).
-
-*insert learning curves fig here*
-
 With Random Forests, the convergence is even better (Figure __rfcurve__).
-
-*insert another learning curves fig here*
-
-We should have three plots:
-
-Feature importance: feat w/ highest coefficient was (possibly K-S statistic).
+Regarding feature importance, the feature with the highest coefficient was.... (possibly K-S statistic).
 
 Discussion
 ========
@@ -180,10 +164,12 @@ In the future, can adapt the system to monitor the database and ask for new labe
 Limitation: Doesn't tell you "when to stop."
 Workable for few thousands of rows: SME can sign off on each row.
 Will be workable for 10,000+ if additional "stopping" criterion developed.
+Machine learning has been applied to lab data cleaning, but to our knowledge *active* learning has not.
 
 Conclusion
 ========
 
+We have developed an application that allows clinical researchers access to active machine learning, to rapidly aggregate data elements into a single concept.
 
 References
 ========
