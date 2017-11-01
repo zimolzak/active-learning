@@ -3,7 +3,8 @@ Clinical Concept Adjudication via Active Machine Learning
 
 Fillmore, Zimolzak, others
 
-Cf requirements for a "brief communications" article here: https://academic.oup.com/jamia/pages/General_Instructions . 2000 words, 2 tables, 3 figs.
+Cf requirements for a "brief communications" article here: https://academic.oup.com/jamia/pages/General_Instructions .
+2000 words, 2 tables, 3 figs.
 
 Abstract
 ========
@@ -87,9 +88,9 @@ We used as-is the numerical fields describing the distribution of the associated
 Additionally, we added as a feature a Kolmogorov-Smirnov statistic that compares, for an individual example lab test, the distribution of that test's results relative to the overall distribution of all positive training examples' results.
 
 We evaluated this basic system using seven datasets that had been already adjudicated by VA experts.
-These datasets, and basic information about them, are shown in Table __datasets__.
+These datasets, and basic information about them, are shown in Table ~~tableDatasets.
 
-Table __datasets__ should show:
+Table ~~tableDatasets should show:
 * The target we are looking for, e.g., HGB, 
 * If possible, the query or queries used to generate candidates
 * The number of examples overall
@@ -110,7 +111,7 @@ Another approach is variance reduction, in which the next example is chosen so a
 For logistic regression, variance reduction constitutes a stepwise optimal approach to choosing the next example [Schein].
 
 We evaluated the efficacy of these (three?) active learning statistics for the purpose of lab adjudication as follows.
-Using the seven adjudicated datasets summarized in Table __datasets__, we simulated the active learning process under Random Forests and each statistic.
+Using the seven adjudicated datasets summarized in Table ~~tableDatasets, we simulated the active learning process under Random Forests and each statistic.
 We plotted learning curves, showing, for each dataset, the 10-fold cross validation accuracy at each step in the active learning process, i.e., after each additional example was labelled (with its previously adjudicated ground truth label) in the simulation.
 
 Operationalizing as web application
@@ -147,14 +148,14 @@ Results
 ========
 
 Using seven datasets that have been adjudicated by experts, we compare three algorithms: Logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests.
-We obtain high 10-fold cross-validation accuracy (Table __crossvaltable__).
-Further results are shown in Figure __crossvalfig__.
+We obtain high 10-fold cross-validation accuracy (Table ~~tableCrossVal).
+Further results are shown in Figure ~~figCrossVal.
 The highest accuracy is achieved using Random Forests, with LASSO a close second.
 However, LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
 We dropped SVM from further consideration because it has the worst performance, and it is not as easy to interpret its results.
  
-Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure __lassocurve__).
-With Random Forests, the convergence is even better (Figure __rfcurve__).
+Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure ~~figLassoLearningCurve).
+With Random Forests, the convergence is even better (Figure ~~figRandomForestLearningCurve).
 Regarding feature importance, the feature with the highest coefficient was.... (possibly K-S statistic).
 
 Discussion
