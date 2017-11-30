@@ -166,6 +166,10 @@ Limitation: Doesn't tell you "when to stop."
 Workable for few thousands of rows: SME can sign off on each row.
 Will be workable for 10,000+ if additional "stopping" criterion developed.
 Machine learning has been applied to lab data cleaning, but to our knowledge *active* learning has not.
+(note: "interactive machine learning" moreso than "active learning". Several statistics provided, including N. Consider figure of accuracy vs. number labeled: message being quick convergence. That is, don't need the "next annotation" to be one w/ suggestive A.L. statistic; rather, label the row with the biggest N (40,000 albumins instead of 100).)
+Could use this to manually review all labs where N > 1000, let machine predict rest. (Could do 1st part--label high N--in Excel, but the 2nd part--predict--is novel.)
+Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
+1 *possible* Future direction: dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
 
 Conclusion
 ========
