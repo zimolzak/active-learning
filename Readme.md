@@ -64,12 +64,6 @@ For example, the Mini-Sentinel program had to take clinical laboratory results f
 Objective
 ========
 
-Our objective is to design and build a system that allows clinical researchers using VA data to quickly and reliably adjudicate clinical concepts such as lab test results.
-...so that... what? **fixme**
-We do so by taking advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
-In particular, we use active learning and interactive feature engineering to speed up adjudication.
-Our tool is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
-
 We sought to develop a tool that uses machine/active learning to "extend the reach" of expert lab test annotators, so that the expert doesn't have to enter some decision on each and every row.
 
 Materials and Methods
@@ -173,6 +167,11 @@ Machine learning has been applied to lab data cleaning, but to our knowledge *ac
 Could use this to manually review all labs where N > 1000, let machine predict rest. (Could do 1st part--label high N--in Excel, but the 2nd part--predict--is novel.)
 Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
 1 *possible* Future direction: dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
+
+We do so by taking advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
+In particular, we use active learning and interactive feature engineering to speed up adjudication.
+Our tool is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
+
 
 Conclusion
 ========
