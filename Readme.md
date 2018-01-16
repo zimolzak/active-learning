@@ -65,9 +65,12 @@ Objective
 ========
 
 Our objective is to design and build a system that allows clinical researchers using VA data to quickly and reliably adjudicate clinical concepts such as lab test results.
+...so that... what? **fixme**
 We do so by taking advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
 In particular, we use active learning and interactive feature engineering to speed up adjudication.
-Our tools is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
+Our tool is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
+
+We sought to develop a tool that uses machine/active learning to "extend the reach" of expert lab test annotators, so that the expert doesn't have to enter some decision on each and every row.
 
 Materials and Methods
 ========
