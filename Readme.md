@@ -22,6 +22,7 @@ In particular, we use active learning and interactive feature engineering to spe
 
 **Conclusion**
 
+
 Background and Significance
 ========
 
@@ -29,7 +30,7 @@ Background and Significance
 
 **para = what can lab data do for you.**
 Lab data is an important component in much medical research.
-You can get it from existing data, a.k.a. "secondary use."
+You can get it from existing data, a.k.a. "secondary use" [MIT Critical Data].
 For example, serum creatinine lab test results are essential for a study comparing the efficacy of several different diuretics [Lederle].
 Similarly, serum free light chain lab test results are key indicators in studies of difference in surival multiple myeloma patients.
 For example, we might want to find serum creatinine lab test results, or serum free light chain results.
@@ -80,6 +81,7 @@ Objective
 ========
 
 We sought to develop a tool that uses machine/active learning to "extend the reach" of expert lab test annotators, so that the expert doesn't have to enter a decision on each and every row.
+
 
 Materials and Methods
 ========
@@ -145,6 +147,7 @@ For example, if the SME is interested in blood hemoglobin lab values, it is like
 #"Oxygen capacity" vs each word separately
 For example, if the SME is intersted in serum creatinine, it is likely that any laboratory test names containing "24 HR" should be excluded, even if they do not include "urine", because 24-hour urine creatine is a different laboratory test the one of interest.
 
+
 Results
 ========
 
@@ -159,6 +162,13 @@ Regarding feature importance, the feature with the highest coefficient (most inf
 Discussion
 ========
 
+We have developed a tool that uses machine/active learning to assist lab adjudication experts, so that only a few lab data elements need to be adjudicated, and the rest can be inferred by the system accurately.
+We take advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
+In particular, we use active learning and interactive feature engineering to speed up adjudication.
+Our tool is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
+
+No big differences from lab to lab.
+Nor from method to method.
 LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
 
 In the future, can adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
@@ -171,19 +181,12 @@ Could use this to manually review all labs where N > 1000, let machine predict r
 Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
 1 *possible* Future direction: dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
 
-We take advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
-In particular, we use active learning and interactive feature engineering to speed up adjudication.
-Our tool is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
-
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) (needs expansion on this item).*
 *non medicine stuff? Tamr etc?? & 1 other? (needs expansion)* [Held]
 *HSR-DATA list search (needs expansion)*
 
-
-Time savings
---------
-
+Next step is to do testing.
 To evaluate the ability of this tool to speed up the adjudication process, we added logging functionality.
 Our tool records all actions taken by the user (including labelling examples, sorting the table, and adding or removing features) along with a time stamp.
 XXX and YYY were selected as lab tests for two clinicians adjudicate for the purposes of testing.
@@ -191,14 +194,8 @@ For XXX, AZ adjudicated using the SOP first and our tool second, and DG adjudica
 For YYY, roles were reversed: AZ adjudicated using our tool first and the SOP second, and DG adjudicated using the SOP first and our tool second.
 Moreover, the clinicians waited 24 hours between the first and second adjudication, to mitigate any advantage from adjudicating the same lab test twice.
 We timed how long it took to label using each tool.
-Inter-clinician agreement for each combination of tool and lab test were measured by Cohen's kappa.
-Learning curves were also plotted for each....
+Inter-clinician agreement for each combination of tool and lab test can be measured by Cohen's kappa.
 
-
-Conclusion
-========
-
-We have developed an application that allows clinical researchers access to active machine learning, to rapidly aggregate data elements into a single concept.
 
 References
 ========
@@ -240,3 +237,5 @@ Lederle FA, Cushman WC, Ferguson RE, Brophy MT, Fiore LD. Chlorthalidone Versus 
 Fihn SD, Francis J, Clancy C, et al. Insights from advanced analytics at the veterans health administration. Health Aff. 2014;33(7):1203-1211.
 
 Giroir BP, Wilensky GR. Reforming the Veterans Health Administration — Beyond Palliation of Symptoms. N Engl J Med. 2015;373(18):1693-1695.
+
+MIT Critical Data, editors. Secondary Analysis of Electronic Health Records. Cham, Switzerland: Springer; 2016.
