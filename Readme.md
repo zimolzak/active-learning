@@ -68,10 +68,7 @@ For example, the Mini-Sentinel program had to take clinical laboratory results f
 Objective
 ========
 
-Our objective is to design and build a system that allows clinical researchers using VA data to quickly and reliably adjudicate clinical concepts such as lab test results.
-We do so by taking advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
-In particular, we use active learning and interactive feature engineering to speed up adjudication.
-Our tools is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
+We sought to develop a tool that uses machine/active learning to "extend the reach" of expert lab test annotators, so that the expert doesn't have to enter some decision on each and every row.
 
 Materials and Methods
 ========
@@ -92,9 +89,9 @@ We used as-is the numerical fields describing the distribution of the associated
 Additionally, we added as a feature a Kolmogorov-Smirnov statistic that compares, for an individual example lab test, the distribution of that test's results relative to the overall distribution of all positive training examples' results.
 
 We evaluated this basic system using seven datasets that had been already adjudicated by VA experts.
-These datasets, and basic information about them, are shown in Table ~~tableDatasets.
+These datasets, and basic information about them, are shown in Table **tableDatasets**.
 
-Table ~~tableDatasets should show:
+Table **tableDatasets** should show:
 * The target we are looking for, e.g. hemoglobin
 * If possible, the query or queries used to generate candidates
 * The number of examples overall
@@ -115,7 +112,7 @@ Another approach is variance reduction, in which the next example is chosen so a
 For logistic regression, variance reduction constitutes a stepwise optimal approach to choosing the next example [Schein].
 
 We evaluated the efficacy of these (three?) active learning statistics for the purpose of lab adjudication as follows.
-Using the seven adjudicated datasets summarized in Table ~~tableDatasets, we simulated the active learning process under Random Forests and each statistic.
+Using the seven adjudicated datasets summarized in Table **tableDatasets**, we simulated the active learning process under Random Forests and each statistic.
 We plotted learning curves, showing, for each dataset, the 10-fold cross validation accuracy at each step in the active learning process, i.e., after each additional example was labelled (with its previously adjudicated ground truth label) in the simulation.
 
 Operationalizing as web application
@@ -140,19 +137,18 @@ For example, if the SME is intersted in serum creatinine, it is likely that any 
 Results
 ========
 
-Using seven datasets that have been adjudicated by experts, we compare three algorithms: Logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests.
-We obtain high 10-fold cross-validation accuracy (Table ~~tableCrossVal).
-Further results are shown in Figure ~~figCrossVal.
-The highest accuracy is achieved using Random Forests, with LASSO a close second.
-However, LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
-We dropped SVM from further consideration because it has the worst performance, and it is not as easy to interpret its results.
+We found that 10-fold cross-validation accuracy was high for all seven laboratory tests, and for all three methods, after all annotated training examples had been added (Table **tableCrossVal**).
+For 6 out of 7 laboratory tests, random forests achieved the top cross validation accuracy, and for 6 out of 7 laboratory tests, L1-regularized logistic regression achieved second place or better.
+Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure **figLassoLearningCurve**), with all seven laboratory tests above 90% cross validation accuracy with 100 or fewer training examples.
+With Random Forests, the convergence occurs with even fewer training examples (Figure **figRandomForestLearningCurve**).
+SVM learning curves are not shown because this method had the worst performance, and it is not as easy to interpret its results.
+Regarding feature importance, the feature with the highest coefficient (most informative) was often the Kolmogorov-Smirnov statistic (table **tableCoefficients**) **FIXME** make sure this is true once table is fleshed out.
 
-Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure ~~figLassoLearningCurve).
-With Random Forests, the convergence is even better (Figure ~~figRandomForestLearningCurve).
-Regarding feature importance, the feature with the highest coefficient was.... (possibly K-S statistic).
 
 Discussion
 ========
+
+LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
 
 In the future, can adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
 Limitation: Doesn't tell you "when to stop."
@@ -163,6 +159,10 @@ Machine learning has been applied to lab data cleaning, but to our knowledge *ac
 Could use this to manually review all labs where N > 1000, let machine predict rest. (Could do 1st part--label high N--in Excel, but the 2nd part--predict--is novel.)
 Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
 1 *possible* Future direction: dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
+
+We take advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
+In particular, we use active learning and interactive feature engineering to speed up adjudication.
+Our tool is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
 
 Time savings
 --------
@@ -217,3 +217,5 @@ Lin MC, Vreeman DJ, McDonald CJ, Huff SM. Correctness of Voluntary LOINC Mapping
 Raebel MA, Haynes K, Woodworth TS, Saylor G, Cavagnaro E, Coughlin KO, Curtis LH, Weiner MG, Archdeacon P, Brown JS. Electronic clinical laboratory test results data tables: lessons from Mini-Sentinel. Pharmacoepidemiol Drug Saf. 2014 Jun;23(6):609-18.
 
 Held, Stonebraker, Davenport, Ilyas, Brodie, Palmer, Markarian. Getting Data Right. 2016. O'Reilly Media, Sebastopol, CA.
+
+Lederle FA, Cushman WC, Ferguson RE, Brophy MT, Fiore LD. Chlorthalidone Versus Hydrochlorothiazide: A New Kind of Veterans Affairs Cooperative Study. Ann Intern Med. 2016 Nov 1;165(9):663-664.
