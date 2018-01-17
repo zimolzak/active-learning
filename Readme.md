@@ -25,20 +25,35 @@ In particular, we use active learning and interactive feature engineering to spe
 Background and Significance
 ========
 
-Clinical concept adjudication is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
-This is important as a first step for many studies using large databases of healthcare records.
-For example, serum creatinine lab test results are essential for a study comparing the efficacy of several different diuretics [DCP Project].
-Similarly, serum free light chain lab test results are key indicators in studies of difference in surival multiple myeloma patients.
+*Flow of this section: secondary use is a thing that in theory could be useful in lots of ways --> data is messy --> so adjudication exists --> others have tried --> despite those efforts, here is our current process --> which has drawbacks --> maybe active learning can help.*
 
-This is important as a first step for many database-based analyses.
+**para = what can lab data do for you.**
+Lab data is an important component in much medical research.
+You can get it from existing data, a.k.a. "secondary use."
+For example, serum creatinine lab test results are essential for a study comparing the efficacy of several different diuretics [Lederle].
+Similarly, serum free light chain lab test results are key indicators in studies of difference in surival multiple myeloma patients.
 For example, we might want to find serum creatinine lab test results, or serum free light chain results.
 A criterion to distinguish active from smoldering myeloma is serum creatinine level > 2 mg/dL (173 mmol/L) and renal insufficiency attributable to myeloma [Rajkumar].
-Thus, it's natural to look for serum creatinine lab results.
+
+**para = demonstrate why we need cleaning.**
+It's natural simply to look for serum creatinine lab results in the existing database such as the EMR.
 But this is not simple.
-If we search for "creatinine" in the data warehouse's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
+VA has a data warehouse, which is big [Fihn] but messy [Giroir].
+If we search for "creatinine" in the VA data warehouse's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
 If we make the query more specific - say, "creatinine" followed by "serum" - we get a much more specific list (64 result types), but many true positives are missed.
 Bottom line: even for a simple lab like serum creatinine, to find all the serum creatinine lab results in the VA's electronic health record (EHR), we - or someone - need to do a careful process of adjudication.
 
+**para = adjudication/cleaning is a thing.**
+Therefore, we have clinical concept adjudication, which is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
+This is important as a first step for many studies using large databases of healthcare records.
+
+**para = others have tried.**
+The Logical Observation Identifiers Names and Codes (LOINC) standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. [Khan]
+But mappings of local laboratory tests to LOINC may be erroneous, as well [Lin].
+Previous authors have faced similar lab result harmonization problems.
+For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. [Raebel]
+
+**para = what we do.**
 Our current process is designed to harmonize test results from 144 independent clinical laboratories.
 It relies on subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
 Database technicians pull candidate record types into Excel.
@@ -47,28 +62,24 @@ SMEs generally accomplish this using a spreadsheet that can be sorted and filter
 SMEs resolve disagreements.
 Database IDs and labels of "yes"- and "no"-labeled record types are entered in new database table as an "adjudicated concept".
 The spreadsheet is kept as documentation.
+
+**para = drawbacks.**
 Several drawbacks exist.
 The process is time-consuming and hard to scale.
 The adjudicated concept goes out-of-date as new record types are added.
-Finally, it is hard for the end-user to understand, validate, or adapt adjudicated concept.
+Finally, it is hard for the end-user to understand, validate, or adapt the final adjudicated concept.
 
+**para = maybe AL can help.**
+Active learning presents a possible improved approach.
 In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
 Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [Feng], screening citations to include in systematic reviews [Kontonatsios], clinical text processing [Kholghi] [Figueroa] [Nguyen], and phenotyping based on text and billing codes [Chen].
 Other refs: [Cohn] [Atlas] [Settles].
 
-This is related to multiple other problems and prior work.
-*OMOP (or other data models) (needs expansion on this item).*
-The Logical Observation Identifiers Names and Codes (LOINC) standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. [Khan]
-Mappings of local laboratory tests to LOINC may be erroneous, as well [Lin].
-Previous authors have faced similar lab result harmonization problems.
-For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. [Raebel]
-*non medicine stuff? Tamr etc?? & 1 other? (needs expansion)* [Held]
-*HSR-DATA list search (needs expansion)*
 
 Objective
 ========
 
-We sought to develop a tool that uses machine/active learning to "extend the reach" of expert lab test annotators, so that the expert doesn't have to enter some decision on each and every row.
+We sought to develop a tool that uses machine/active learning to "extend the reach" of expert lab test annotators, so that the expert doesn't have to enter a decision on each and every row.
 
 Materials and Methods
 ========
@@ -164,6 +175,12 @@ We take advantage of the fact that adjudication is a binary classification task,
 In particular, we use active learning and interactive feature engineering to speed up adjudication.
 Our tool is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
 
+This is related to multiple other problems and prior work.
+*OMOP (or other data models) (needs expansion on this item).*
+*non medicine stuff? Tamr etc?? & 1 other? (needs expansion)* [Held]
+*HSR-DATA list search (needs expansion)*
+
+
 Time savings
 --------
 
@@ -219,3 +236,7 @@ Raebel MA, Haynes K, Woodworth TS, Saylor G, Cavagnaro E, Coughlin KO, Curtis LH
 Held, Stonebraker, Davenport, Ilyas, Brodie, Palmer, Markarian. Getting Data Right. 2016. O'Reilly Media, Sebastopol, CA.
 
 Lederle FA, Cushman WC, Ferguson RE, Brophy MT, Fiore LD. Chlorthalidone Versus Hydrochlorothiazide: A New Kind of Veterans Affairs Cooperative Study. Ann Intern Med. 2016 Nov 1;165(9):663-664.
+
+Fihn SD, Francis J, Clancy C, et al. Insights from advanced analytics at the veterans health administration. Health Aff. 2014;33(7):1203-1211.
+
+Giroir BP, Wilensky GR. Reforming the Veterans Health Administration — Beyond Palliation of Symptoms. N Engl J Med. 2015;373(18):1693-1695.
