@@ -22,13 +22,12 @@ In particular, we use active learning and interactive feature engineering to spe
 
 **Conclusion**
 
+*Flow of the Background section: secondary use is a thing that in theory could be useful in lots of ways --> data is messy --> so adjudication exists --> others have tried --> despite those efforts, here is our current process --> which has drawbacks --> maybe active learning can help.*
+
 
 Background and Significance
 ========
 
-*Flow of this section: secondary use is a thing that in theory could be useful in lots of ways --> data is messy --> so adjudication exists --> others have tried --> despite those efforts, here is our current process --> which has drawbacks --> maybe active learning can help.*
-
-**para = what can lab data do for you.**
 Lab data is an important component in much medical research.
 You can get it from existing data, a.k.a. "secondary use" [MIT Critical Data].
 For example, serum creatinine lab test results are essential for a study comparing the efficacy of several different diuretics [Lederle].
@@ -36,7 +35,6 @@ Similarly, serum free light chain lab test results are key indicators in studies
 For example, we might want to find serum creatinine lab test results, or serum free light chain results.
 A criterion to distinguish active from smoldering myeloma is serum creatinine level > 2 mg/dL (173 mmol/L) and renal insufficiency attributable to myeloma [Rajkumar].
 
-**para = demonstrate why we need cleaning.**
 It's natural simply to look for serum creatinine lab results in the existing database such as the EMR.
 But this is not simple.
 VA has a data warehouse, which is big [Fihn] but messy [Giroir].
@@ -44,17 +42,15 @@ If we search for "creatinine" in the VA data warehouse's LabChemTestName table, 
 If we make the query more specific - say, "creatinine" followed by "serum" - we get a much more specific list (64 result types), but many true positives are missed.
 Bottom line: even for a simple lab like serum creatinine, to find all the serum creatinine lab results in the VA's electronic health record (EHR), we - or someone - need to do a careful process of adjudication.
 
-**para = adjudication/cleaning is a thing.**
 Therefore, we have clinical concept adjudication, which is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
 This is important as a first step for many studies using large databases of healthcare records.
 
-**para = others have tried.**
+Previous authors have faced similar lab result harmonization problems.
 The Logical Observation Identifiers Names and Codes (LOINC) standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. [Khan]
 But mappings of local laboratory tests to LOINC may be erroneous, as well [Lin].
-Previous authors have faced similar lab result harmonization problems.
 For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. [Raebel]
 
-**para = what we do.**
+Despite these efforts, VA data still needs adjudication.
 Our current process is designed to harmonize test results from 144 independent clinical laboratories.
 It relies on subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
 Database technicians pull candidate record types into Excel.
@@ -64,13 +60,11 @@ SMEs resolve disagreements.
 Database IDs and labels of "yes"- and "no"-labeled record types are entered in new database table as an "adjudicated concept".
 The spreadsheet is kept as documentation.
 
-**para = drawbacks.**
-Several drawbacks exist.
+Several drawbacks to that process exist.
 The process is time-consuming and hard to scale.
 The adjudicated concept goes out-of-date as new record types are added.
 Finally, it is hard for the end-user to understand, validate, or adapt the final adjudicated concept.
 
-**para = maybe AL can help.**
 Active learning presents a possible improved approach.
 In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
 Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [Feng], screening citations to include in systematic reviews [Kontonatsios], clinical text processing [Kholghi] [Figueroa] [Nguyen], and phenotyping based on text and billing codes [Chen].
@@ -99,39 +93,32 @@ We used a bag-of-words encoding for textual fields like the test name and other 
 In a bag-of-words encoding of a textual field, one adds a distinct feature for each vocabulary word; the feature's value for a given example is the number of times that word occurs in that example.
 We used a categorical encoding for short textual fields, including the station (i.e., the hospital) identifier, the VISN (i.e., the region) identifier, the units of the lab test, and the LOINC code associated with the lab test.
 We used as-is the numerical fields describing the distribution of the associated lab test results, including the number of associated results, and their minimum value, maximum value, and percentile information.
-Additionally, we added as a feature a Kolmogorov-Smirnov statistic that compares, for an individual example lab test, the distribution of that test's results relative to the overall distribution of all positive training examples' results.
+Additionally, we added as a feature a Kolmogorov-Smirnov statistic that compares, for an individual example lab test, the distribution of that test's results relative to the overall distribution of all positive training examples' results [citation needed].
 
 We evaluated this basic system using seven datasets that had been already adjudicated by VA experts.
 These datasets, and basic information about them, are shown in Table **tableDatasets**.
-
-Table **tableDatasets** should show:
-* The target we are looking for, e.g. hemoglobin
-* If possible, the query or queries used to generate candidates
-* The number of examples overall
-* The number of examples labeled positive and negative
-
 We compared the performance of three algorithms in the context of this basic system: logistic regression with an L1 penalty (also known as the least absolute shrinkage and selection operator, or LASSO), support vector machines (SVM), and random forests. 
 We used 10-fold cross validation to evaluate the accuracy of the system using each algorithm.
 
 Active learning
 --------
 
-We enhanced this basic system with a pool-based active learning approach.
+We enhanced this basic system with a pool-based active learning approach [citation needed].
 We considered several active learning approaches.
 A baseline approach is to randomly sample the next example to label.
 A simple approach is to choose as the next example to label the example for which the margin between the model's probability of a positive label and that of a negative label is minimized.
 For example, if the system is uncertain about an example's label, so it assigns the probability of a positive label to be 51 percent and that of a negative label to be 49 percent, then the margin is 2 percent; in contrast, the margin if the probability of a positive label is 99 percent and that of a negative label is 1 percent is 98 percent.
-Another approach is variance reduction, in which the next example is chosen so as to maximally reduce the prediction variance.
+A third approach is variance reduction, in which the next example is chosen so as to maximally reduce the prediction variance.
 For logistic regression, variance reduction constitutes a stepwise optimal approach to choosing the next example [Schein].
 
 We evaluated the efficacy of these (three?) active learning statistics for the purpose of lab adjudication as follows.
-Using the seven adjudicated datasets summarized in Table **tableDatasets**, we simulated the active learning process under Random Forests and each statistic.
+Using the seven adjudicated datasets summarized in Table **tableDatasets**, we simulated the active learning process under Random Forests and each statistic. **FIXME is this true? What AL stat does SVM use, etc.?**
 We plotted learning curves, showing, for each dataset, the 10-fold cross validation accuracy at each step in the active learning process, i.e., after each additional example was labelled (with its previously adjudicated ground truth label) in the simulation.
 
 Operationalizing as web application
 --------
 
-This interface was designed as a single-page web application, with a front-end written in ReactJS and a back-end written in Python.
+An interface was designed as a single-page web application, with a front-end written in ReactJS and a back-end written in Python.
 The interface allows users to view both the original table of data elements and the feature matrix that the learning algorithm is based on.
 These tables can be looked at separately or viewed side-by-side.
 The tables can be sorted by any column, including, most importantly, the active learning statistic of interest.
@@ -171,30 +158,27 @@ No big differences from lab to lab.
 Nor from method to method.
 LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
 
-In the future, can adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
 Limitation: Doesn't tell you "when to stop."
 Workable for few thousands of rows: SME can sign off on each row.
 Will be workable for 10,000+ if additional "stopping" criterion developed.
-Machine learning has been applied to lab data cleaning, but to our knowledge *active* learning has not.
-(note: "interactive machine learning" moreso than "active learning". Several statistics provided, including N. Consider figure of accuracy vs. number labeled: message being quick convergence. That is, don't need the "next annotation" to be one w/ suggestive A.L. statistic; rather, label the row with the biggest N (40,000 albumins instead of 100).)
-Could use this to manually review all labs where N > 1000, let machine predict rest. (Could do 1st part--label high N--in Excel, but the 2nd part--predict--is novel.)
-Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
-1 *possible* Future direction: dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
+
+One next step is to do testing.
+To evaluate the ability of this tool to speed up the adjudication process, we added logging functionality.
+Our tool will record all actions taken by the user (including labelling examples, sorting the table, and adding or removing features) along with a time stamp.
+Try it the old and new way, timing how long it took to label using each tool.
+Inter-clinician agreement for each combination of tool and lab test can be measured by Cohen's kappa.
+
+Secondly, we could adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
+A third *possible* Future direction: dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
 
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) (needs expansion on this item).*
 *non medicine stuff? Tamr etc?? & 1 other? (needs expansion)* [Held]
-*HSR-DATA list search (needs expansion)*
 
-Next step is to do testing.
-To evaluate the ability of this tool to speed up the adjudication process, we added logging functionality.
-Our tool records all actions taken by the user (including labelling examples, sorting the table, and adding or removing features) along with a time stamp.
-XXX and YYY were selected as lab tests for two clinicians adjudicate for the purposes of testing.
-For XXX, AZ adjudicated using the SOP first and our tool second, and DG adjudicated using our tool first and the SOP second.
-For YYY, roles were reversed: AZ adjudicated using our tool first and the SOP second, and DG adjudicated using the SOP first and our tool second.
-Moreover, the clinicians waited 24 hours between the first and second adjudication, to mitigate any advantage from adjudicating the same lab test twice.
-We timed how long it took to label using each tool.
-Inter-clinician agreement for each combination of tool and lab test can be measured by Cohen's kappa.
+Could use this to manually review all labs (rows) where N > 1000, let machine predict rest. (Could do 1st part--label high N--in Excel, but the 2nd part--predict--is novel.)
+Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
+Machine learning has been applied to lab data cleaning, but to our knowledge *active* learning has not.
+(note: "interactive machine learning" moreso than "active learning". Several statistics provided, including N. Consider figure of accuracy vs. number labeled: message being quick convergence. That is, don't need the "next annotation" to be one w/ suggestive A.L. statistic; rather, label the row with the biggest N (40,000 albumins instead of 100).)
 
 
 References
