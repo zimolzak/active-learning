@@ -26,6 +26,10 @@ Background and Significance
 ========
 
 Clinical concept adjudication is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
+This is important as a first step for many studies using large databases of healthcare records.
+For example, serum creatinine lab test results are essential for a study comparing the efficacy of several different diuretics [DCP Project].
+Similarly, serum free light chain lab test results are key indicators in studies of difference in surival multiple myeloma patients.
+
 This is important as a first step for many database-based analyses.
 For example, we might want to find serum creatinine lab test results, or serum free light chain results.
 A criterion to distinguish active from smoldering myeloma is serum creatinine level > 2 mg/dL (173 mmol/L) and renal insufficiency attributable to myeloma [Rajkumar].
@@ -125,24 +129,13 @@ As the user labels examples within the tool's interface, these statistics are re
 
 In general, in addition to labelling examples, feature engineering can be quite useful as a way to increase a machine learning system's accuracy quickly.
 In our tool, the feature matrix is initialized as described above for the basic system.
-However, we also allow the user to adding or removing any features, including, for example, individual features corresponding to a single vocabulary word.
+However, we also allow the user to add or remove any features, including, for example, individual features corresponding to a single vocabulary word.
 We allow bag-of-words, categorical, or numerical features to be added, both in case they have been previously removed and in case there is a reason to treat a particular data element differently from our default (e.g., treating the lab test name as a categorical variable instead of using a bag-of-words encoding).
 Most important, we allow the user to specify a regular expression relative to a textual column, and create a feature whose value is the count of that regular expression within the column.
 This is useful because sometimes a clinician or other expert can look at a text field and easily formulate a pattern that should be excluded or included; including a feature that matches that pattern can substantially increase the ability of the machine learning system to correctly classify examples.
 For example, if the SME is interested in blood hemoglobin lab values, it is likely that any laboratory test names containing "free" should be excluded, because *FREE HGB* refers to a laboratory test different from the one of interest.
-
-Time savings
---------
-
-To evaluate the ability of this tool to speed up the adjudication process, we added logging functionality.
-Our tool records all actions taken by the user (including labelling examples, sorting the table, and adding or removing features) along with a time stamp.
-XXX and YYY were selected as lab tests for two clinicians adjudicate for the purposes of testing.
-For XXX, AZ adjudicated using the SOP first and our tool second, and DG adjudicated using our tool first and the SOP second.
-For YYY, roles were reversed: AZ adjudicated using our tool first and the SOP second, and DG adjudicated using the SOP first and our tool second.
-Moreover, the clinicians waited 24 hours between the first and second adjudication, to mitigate any advantage from adjudicating the same lab test twice.
-We timed how long it took to label using each tool.
-Inter-clinician agreement for each combination of tool and lab test were measured by Cohen's kappa.
-Learning curves were also plotted for each....
+#"Oxygen capacity" vs each word separately
+For example, if the SME is intersted in serum creatinine, it is likely that any laboratory test names containing "24 HR" should be excluded, even if they do not include "urine", because 24-hour urine creatine is a different laboratory test the one of interest.
 
 Results
 ========
@@ -153,7 +146,7 @@ Further results are shown in Figure ~~figCrossVal.
 The highest accuracy is achieved using Random Forests, with LASSO a close second.
 However, LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
 We dropped SVM from further consideration because it has the worst performance, and it is not as easy to interpret its results.
- 
+
 Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure ~~figLassoLearningCurve).
 With Random Forests, the convergence is even better (Figure ~~figRandomForestLearningCurve).
 Regarding feature importance, the feature with the highest coefficient was.... (possibly K-S statistic).
@@ -170,6 +163,20 @@ Machine learning has been applied to lab data cleaning, but to our knowledge *ac
 Could use this to manually review all labs where N > 1000, let machine predict rest. (Could do 1st part--label high N--in Excel, but the 2nd part--predict--is novel.)
 Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
 1 *possible* Future direction: dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
+
+Time savings
+--------
+
+To evaluate the ability of this tool to speed up the adjudication process, we added logging functionality.
+Our tool records all actions taken by the user (including labelling examples, sorting the table, and adding or removing features) along with a time stamp.
+XXX and YYY were selected as lab tests for two clinicians adjudicate for the purposes of testing.
+For XXX, AZ adjudicated using the SOP first and our tool second, and DG adjudicated using our tool first and the SOP second.
+For YYY, roles were reversed: AZ adjudicated using our tool first and the SOP second, and DG adjudicated using the SOP first and our tool second.
+Moreover, the clinicians waited 24 hours between the first and second adjudication, to mitigate any advantage from adjudicating the same lab test twice.
+We timed how long it took to label using each tool.
+Inter-clinician agreement for each combination of tool and lab test were measured by Cohen's kappa.
+Learning curves were also plotted for each....
+
 
 Conclusion
 ========
