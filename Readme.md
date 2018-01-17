@@ -144,19 +144,17 @@ Learning curves were also plotted for each....
 Results
 ========
 
-Using seven datasets that have been adjudicated by experts, we compare three algorithms: Logistic regression with an L1 penalty (LASSO), support vector machines (SVM), and random forests.
-We obtain high 10-fold cross-validation accuracy (Table **tableCrossVal**).
-Further results are shown in Figure **figCrossVal**.
-The highest accuracy is achieved using Random Forests, with LASSO a close second.
-However, LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
-We dropped SVM from further consideration because it has the worst performance, and it is not as easy to interpret its results.
- 
-Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure **figLassoLearningCurve**).
-With Random Forests, the convergence is even better (Figure **figRandomForestLearningCurve**).
-Regarding feature importance, the feature with the highest coefficient was.... (possibly K-S statistic).
+We found that 10-fold cross-validation accuracy was high for all seven laboratory tests, and for all three methods, after all annotated training examples had been added (Table **tableCrossVal**).
+For 6 out of 7 laboratory tests, random forests achieved the top cross validation accuracy, and for 6 out of 7 laboratory tests, L1-regularized logistic regression achieved second place or better.
+Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure **figLassoLearningCurve**), with all seven laboratory tests above 90% cross validation accuracy with 100 or fewer training examples.
+With Random Forests, the convergence occurs with even fewer training examples (Figure **figRandomForestLearningCurve**).
+SVM learning curves are not shown because this method had the worst performance, and it is not as easy to interpret its results.
+Regarding feature importance, the feature with the highest coefficient (most informative) was often the Kolmogorov-Smirnov statistic (table **tableCoefficients**) **FIXME** make sure this is true once table is fleshed out.
 
 Discussion
 ========
+
+LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
 
 In the future, can adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
 Limitation: Doesn't tell you "when to stop."
@@ -168,7 +166,7 @@ Could use this to manually review all labs where N > 1000, let machine predict r
 Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
 1 *possible* Future direction: dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
 
-We do so by taking advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
+We take advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
 In particular, we use active learning and interactive feature engineering to speed up adjudication.
 Our tool is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
 
