@@ -143,7 +143,6 @@ For example, if the SME is interested in blood hemoglobin lab values, it is like
 #"Oxygen capacity" vs each word separately
 For example, if the SME is intersted in serum creatinine, it is likely that any laboratory test names containing "24 HR" should be excluded, even if they do not include "urine", because 24-hour urine creatine is a different laboratory test the one of interest.
 
-
 Results
 ========
 
@@ -166,6 +165,10 @@ Our tool is interactive and user interface focused - the expert labels examples,
 No big differences from lab to lab.
 Nor from method to method.
 LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
+
+Goal was How to speed up?
+First obvs idea: tried several act learning meth (i.e. which one to annotate *next*, doing simply one at a time), but didn't perf > than the rand samp simulation.
+However adjudicators even in "Excel style" do bulk labeling (sort filter etc).
 
 Limitation: Doesn't tell you "when to stop."
 Workable for few thousands of rows: SME can sign off on each row.
