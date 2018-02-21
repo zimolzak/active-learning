@@ -74,7 +74,7 @@ Other citations:
 Unit conversions between LOINC codes. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/25/2/192/3871185?searchresult=1
 Implementation and management of a biomedical observation dictionary in a large healthcare information system. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/20/5/940/728793?searchresult=1
 A corpus-based approach for automated LOINC mapping. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/21/1/64/695736?searchresult=1
-Evaluation of a “Lexically Assign, Logically Refine” Strategy for Semi-automated Integration of Overlapping Terminologies. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/5/2/203/740214?searchresult=1
+Evaluation of a "Lexically Assign, Logically Refine" Strategy for Semi-automated Integration of Overlapping Terminologies. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/5/2/203/740214?searchresult=1
 [IMPORTANT] LabRS: A Rosetta stone for retrospective standardization of clinical laboratory test results. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/25/2/121/3821186?searchresult=1
 
 
@@ -112,6 +112,8 @@ We used 10-fold cross validation to evaluate the accuracy of the system using ea
 Active learning
 --------
 
+**probably section gets deleted**
+
 We enhanced this basic system with a pool-based active learning approach [citation needed].
 We considered several active learning approaches.
 A baseline approach is to randomly sample the next example to label.
@@ -126,6 +128,8 @@ We plotted learning curves, showing, for each dataset, the 10-fold cross validat
 
 Operationalizing as web application
 --------
+
+*Something about the initial text search replacing the SQL data pull person, either here or other section.*
 
 An interface was designed as a single-page web application, with a front-end written in JavaScript and a back-end written in Python + scikit-learn.
 The interface allows users to view both the original table of data elements and the feature matrix that the learning algorithm is based on.
@@ -152,6 +156,7 @@ Using our engineered features with L1-penalized logistic regression, there is ra
 With Random Forests, the convergence occurs with even fewer training examples (Figure **figRandomForestLearningCurve**).
 SVM learning curves are not shown because this method had the worst performance, and it is not as easy to interpret its results.
 Regarding feature importance, the feature with the highest coefficient (most informative) was often the Kolmogorov-Smirnov statistic (table **tableCoefficients**) **FIXME** make sure this is true once table is fleshed out. "Wide variety of features were most important, depending on the specific lab test.
+*Further plot of learning curve(s) based on the count of labs (not treating one row of albumin as equal to any other).*
 
 
 Discussion
@@ -161,6 +166,10 @@ We have developed a tool that uses machine/active learning to assist lab adjudic
 We take advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
 In particular, we use active learning and interactive feature engineering to speed up adjudication.
 Our tool is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
+*Tool automates the task from end to end, by also helping w/ the initial text search.*
+*Precomputed table.*
+*Publicize what's been adjudicated.*
+*Future: fork a given adjudication, also include consensus in the same tool.*
 
 No big differences from lab to lab.
 Nor from method to method.
