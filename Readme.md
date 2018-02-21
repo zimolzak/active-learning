@@ -70,6 +70,15 @@ In active learning, the system tries to choose the next example to present to th
 Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [Feng], screening citations to include in systematic reviews [Kontonatsios], clinical text processing [Kholghi] [Figueroa] [Nguyen], and phenotyping based on text and billing codes [Chen].
 Other refs: [Cohn] [Atlas] [Settles].
 
+Other citations:
+Unit conversions between LOINC codes. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/25/2/192/3871185?searchresult=1
+Implementation and management of a biomedical observation dictionary in a large healthcare information system. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/20/5/940/728793?searchresult=1
+A corpus-based approach for automated LOINC mapping. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/21/1/64/695736?searchresult=1
+Evaluation of a “Lexically Assign, Logically Refine” Strategy for Semi-automated Integration of Overlapping Terminologies. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/5/2/203/740214?searchresult=1
+[IMPORTANT] LabRS: A Rosetta stone for retrospective standardization of clinical laboratory test results. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/25/2/121/3821186?searchresult=1
+
+
+
 
 Objective
 ========
@@ -93,7 +102,7 @@ We used a bag-of-words encoding for textual fields like the test name and other 
 In a bag-of-words encoding of a textual field, one adds a distinct feature for each vocabulary word; the feature's value for a given example is the number of times that word occurs in that example.
 We used a categorical encoding for short textual fields, including the station (i.e., the hospital) identifier, the VISN (i.e., the region) identifier, the units of the lab test, and the LOINC code associated with the lab test.
 We used as-is the numerical fields describing the distribution of the associated lab test results, including the number of associated results, and their minimum value, maximum value, and percentile information.
-Additionally, we added as a feature a Kolmogorov-Smirnov statistic that compares, for an individual example lab test, the distribution of that test's results relative to the overall distribution of all positive training examples' results [citation needed].
+Additionally, we added as a feature a Kolmogorov-Smirnov statistic that compares, for an individual example lab test, the distribution of that test's results relative to the overall distribution of all positive training examples' results [Smirnov].
 
 We evaluated this basic system using seven datasets that had been already adjudicated by VA experts.
 These datasets, and basic information about them, are shown in Table **tableDatasets**.
@@ -223,3 +232,8 @@ Fihn SD, Francis J, Clancy C, et al. Insights from advanced analytics at the vet
 Giroir BP, Wilensky GR. Reforming the Veterans Health Administration — Beyond Palliation of Symptoms. N Engl J Med. 2015;373(18):1693-1695.
 
 MIT Critical Data, editors. Secondary Analysis of Electronic Health Records. Cham, Switzerland: Springer; 2016.
+
+Smirnov N. Table for Estimating the Goodness of Fit of Empirical Distributions
+Ann. Math. Statist. Volume 19, Number 2 (1948), 279-281.
+
+
