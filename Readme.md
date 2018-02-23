@@ -162,44 +162,37 @@ Regarding feature importance, the feature with the highest coefficient (most inf
 Discussion
 ========
 
-We have developed a tool that uses machine/active learning to assist lab adjudication experts, so that only a few lab data elements need to be adjudicated, and the rest can be inferred by the system accurately.
-We take advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
-In particular, we use active learning and interactive feature engineering to speed up adjudication.
-Our tool is interactive and user interface focused - the expert labels examples, can also specify features, rules, synthetic examples.
-*Tool automates the task from end to end, by also helping w/ the initial text search.*
-*Precomputed table.*
-*Publicize what's been adjudicated.*
-*Future: fork a given adjudication, also include consensus in the same tool.*
-
+We have developed a tool that uses machine learning to assist lab adjudication experts.
 No big differences from lab to lab.
 Nor from method to method.
 LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
-
-Goal was How to speed up?
 First obvs idea: tried several act learning meth (i.e. which one to annotate *next*, doing simply one at a time), but didn't perf > than the rand samp simulation.
 However adjudicators even in "Excel style" do bulk labeling (sort filter etc).
 
-Limitation: Doesn't tell you "when to stop."
-Workable for few thousands of rows: SME can sign off on each row.
-Will be workable for 10,000+ if additional "stopping" criterion developed.
+Our goal was to speed up the process of expert adjudication of lab results.
+Because of the rapid convergence of the learning methods, only about 100 lab data elements need to be adjudicated, and the rest (about 1000, depending on the lab test) can be inferred by the system accurately.
+For some labs, this is theoretically as much as a 10-fold improvement in adjudication time.
+A possible decision about how many to label: manually review all labs (rows) where N > 1000, let machine predict rest.
+Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
 
+We take advantage of the fact that adjudication is a binary classification task, and as such, it can be scaled up using machine learning techniques.
+Our tool is interactive and user interface focused; the expert labels examples but can also specify features, rules, or synthetic examples.
+We have further extended our system to support the lab adjudication task from end to end, by also helping with the initial search for candidate lab data elements (search by LOINC, text string, etc.).
+Because the tool captures the result of an expert's adjudication, it can also use a database table to publicize what laboratory tests have been adjudicated.
+
+A future improvement would be the ability to "fork" a given adjudication, to update or adapt it for a different study.
+In the future, the tool could also be adapted to capturing adjudication from multiple experts, calculating agreement, and returning discordant lab elements to generate consensus.
 One next step is to do testing.
-To evaluate the ability of this tool to speed up the adjudication process, we added logging functionality.
+To evaluate the ability of this tool to speed up the adjudication process, we have already added logging functionality.
 Our tool will record all actions taken by the user (including labelling examples, sorting the table, and adding or removing features) along with a time stamp.
 Try it the old and new way, timing how long it took to label using each tool.
-Inter-clinician agreement for each combination of tool and lab test can be measured by Cohen's kappa.
-
 Secondly, we could adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
 A third *possible* Future direction: dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
 
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) (needs expansion on this item).*
 *non medicine stuff? Tamr etc?? & 1 other? (needs expansion)* [Held]
-
-Could use this to manually review all labs (rows) where N > 1000, let machine predict rest. (Could do 1st part--label high N--in Excel, but the 2nd part--predict--is novel.)
-Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
-Machine learning has been applied to lab data cleaning, but to our knowledge *active* learning has not.
-(note: "interactive machine learning" moreso than "active learning". Several statistics provided, including N. Consider figure of accuracy vs. number labeled: message being quick convergence. That is, don't need the "next annotation" to be one w/ suggestive A.L. statistic; rather, label the row with the biggest N (40,000 albumins instead of 100).)
+Machine learning has been applied to lab data cleaning, but to our knowledge *interactive* machine learning has not.
 
 
 References
