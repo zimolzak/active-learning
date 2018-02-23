@@ -180,14 +180,14 @@ Our tool is interactive and user interface focused; the expert labels examples b
 We have further extended our system to support the lab adjudication task from end to end, by also helping with the initial search for candidate lab data elements (search by LOINC, text string, etc.).
 Because the tool captures the result of an expert's adjudication, it can also use a database table to publicize what laboratory tests have been adjudicated.
 
-A future improvement would be the ability to "fork" a given adjudication, to update or adapt it for a different study.
-In the future, the tool could also be adapted to capturing adjudication from multiple experts, calculating agreement, and returning discordant lab elements to generate consensus.
-One next step is to do testing.
+A future improvement would be (1) the ability to "fork" a given adjudication, to update or adapt it for a different study.
+In the future, the tool could also be (2) adapted to capturing adjudication from multiple experts, calculating agreement, and returning discordant lab elements to generate consensus.
+One next step is to (3) do testing of speed.
 To evaluate the ability of this tool to speed up the adjudication process, we have already added logging functionality.
 Our tool will record all actions taken by the user (including labelling examples, sorting the table, and adding or removing features) along with a time stamp.
 Try it the old and new way, timing how long it took to label using each tool.
-Secondly, we could adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
-A third *possible* Future direction: dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
+We could (4) adapt the system to monitor the database and ask for new labels as appropriate to keep concepts up-to-date.
+Another *possible* Future direction: (5) dynamically add rows to spreadsheet: add or subtract junk as in LabChemTestName LIKE '%hgb%' etc. (think about whether this is worth mentioning in this section of paper).
 
 This is related to multiple other problems and prior work.
 *OMOP (or other data models) (needs expansion on this item).*
