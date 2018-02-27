@@ -66,7 +66,6 @@ Other refs: [Cohn] [Atlas] [Settles].
 
 Objective
 ========
-
 We sought to develop a tool that uses interactive machine learning to "extend the reach" of expert lab test annotators, so that SMEs do not have to enter a decision for every database identifier.
 
 
@@ -95,12 +94,24 @@ These datasets, and basic information about them, are shown in Table **tableData
 We compared the performance of three algorithms in the context of this basic system: logistic regression with an L1 penalty (also known as the least absolute shrinkage and selection operator, or LASSO), support vector machines (SVM), and random forests. 
 We used 10-fold cross validation to evaluate the accuracy of the system using each algorithm.
 
+Identifier- and observation-level accuracy
+--------
+
+In this task, we are labelling lab test identifiers (database ids), but our ultimate purpose in doing so is to identify patient-level observations (lab test results) of interest.
+The number of observations associated with each identifier varies widely, ranging from a few lab test results to hundreds of thousands of results.
+Thus, there are two relevant ways to compute accuracy: in terms of the number of lab test identifiers correctly classified, or in terms of the number of lab test results correctly classified.
+Depending on the situation, these might both be of interest.
+If a rough adjudication is desired, it might be sufficient to focus on the identifiers with just the highest number of results; for this, accuracy in terms of identifiers is most important.
+For final use in a study, it might be important to ensure accuracy on all results, even those in the long tail of low count identifiers.
+
 Active learning
 --------
 
 **probably section gets deleted**
 
-We enhanced this basic system with a pool-based active learning approach [citation needed].
+Because our goal in developing this tool is to speed up the process of adjudicating, we considered a pool based active learning approach.
+A baseline approach is to randomly sample the next example to label.
+# We enhanced this basic system with a pool-based active learning approach [citation needed].
 We considered several active learning approaches.
 A baseline approach is to randomly sample the next example to label.
 A simple approach is to choose as the next example to label the example for which the margin between the model's probability of a positive label and that of a negative label is minimized.
@@ -132,6 +143,12 @@ This is useful because sometimes a clinician or other expert can look at a text 
 For example, if the SME is interested in blood hemoglobin lab values, it is likely that any laboratory test names containing "free" should be excluded, because *FREE HGB* refers to a laboratory test different from the one of interest.
 #"Oxygen capacity" vs each word separately
 For example, if the SME is intersted in serum creatinine, it is likely that any laboratory test names containing "24 HR" should be excluded, even if they do not include "urine", because 24-hour urine creatine is a different laboratory test the one of interest.
+
+User collaboration in the web application
+--------
+
+
+
 
 Results
 ========
