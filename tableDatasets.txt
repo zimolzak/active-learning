@@ -1,5 +1,0 @@
-Table **tableDatasets** should show:
-* The target we are looking for, e.g. hemoglobin
-* If possible, the query or queries used to generate candidates
-* The number of examples overall
-* The number of examples labeled positive and negative

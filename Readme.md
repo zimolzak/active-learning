@@ -77,7 +77,6 @@ We sought to develop a tool that uses interactive machine learning to "extend th
 Materials and Methods
 ========
 
-We developed software to speed up the process of adjudication using active machine learning and interactive feature engineering, as follows.
 
 **tableExampleSpreadsheet**
 
@@ -95,7 +94,7 @@ We used as-is the numerical fields describing the distribution of the associated
 Additionally, we added as a feature a Kolmogorov-Smirnov statistic that compares, for an individual example lab test, the distribution of that test's results relative to the overall distribution of all positive training examples' results [Smirnov].
 
 We evaluated this basic system using seven datasets that had been already adjudicated by VA experts.
-These datasets, and basic information about them, are shown in Table **tableDatasets**.
+These datasets, and basic information about them, are shown in Table **tableCrossVal**.
 We compared the performance of three algorithms in the context of this basic system: logistic regression with an L1 penalty (also known as the least absolute shrinkage and selection operator, or LASSO), support vector machines (SVM), and random forests. 
 We used 10-fold cross validation to evaluate the accuracy of the system using each algorithm.
 
@@ -115,8 +114,6 @@ Active learning
 **probably section gets deleted**
 
 Because our goal in developing this tool is to speed up the process of adjudicating, we considered a pool based active learning approach.
-A baseline approach is to randomly sample the next example to label.
-# We enhanced this basic system with a pool-based active learning approach [citation needed].
 We considered several active learning approaches.
 A baseline approach is to randomly sample the next example to label.
 A simple approach is to choose as the next example to label the example for which the margin between the model's probability of a positive label and that of a negative label is minimized.
@@ -124,16 +121,14 @@ For example, if the system is uncertain about an example's label, so it assigns 
 A third approach is variance reduction, in which the next example is chosen so as to maximally reduce the prediction variance.
 For logistic regression, variance reduction constitutes a stepwise optimal approach to choosing the next example [Schein].
 
-We evaluated the efficacy of these (three?) active learning statistics for the purpose of lab adjudication as follows.
-Using the seven adjudicated datasets summarized in Table **tableDatasets**, we simulated the active learning process under Random Forests and each statistic. **FIXME is this true? What AL stat does SVM use, etc.?**
+We evaluated the efficacy of these three active learning methods for the purpose of lab adjudication as follows.
+Using the seven adjudicated datasets summarized in Table **tableCrossVal**, we simulated the active learning process under Random Forests and each statistic. **FIXME is this true? What AL stat does SVM use, etc.?**
 We plotted learning curves, showing, for each dataset, the 10-fold cross validation accuracy at each step in the active learning process, i.e., after each additional example was labelled (with its previously adjudicated ground truth label) in the simulation.
 
 Operationalizing as web application
 --------
 
-*Something about the initial text search replacing the SQL data pull person, either here or other section.*
-
-An interface was designed as a single-page web application, with a front-end written in JavaScript and a back-end written in Python + scikit-learn.
+An interface was designed as a single-page web application, with a front-end written in JavaScript and a back-end written in Python with the scikit-learn library [Pedregosa].
 The interface allows users to view both the original table of data elements and the feature matrix that the learning algorithm is based on.
 These tables can be looked at separately or viewed side-by-side.
 The tables can be sorted by any column, including, most importantly, the active learning statistic of interest.
@@ -147,7 +142,6 @@ Most important, we allow the user to specify a regular expression relative to a 
 This is useful because sometimes a clinician or other expert can look at a text field and easily formulate a pattern that should be excluded or included; including a feature that matches that pattern can substantially increase the ability of the machine learning system to correctly classify examples.
 For example, if the SME is interested in blood hemoglobin lab values, it is likely that any laboratory test names containing "free" should be excluded, because *FREE HGB* refers to a laboratory test different from the one of interest.
 #"Oxygen capacity" vs each word separately
-For example, if the SME is interested in serum creatinine, it is likely that any laboratory test names containing "24 HR" should be excluded, even if they do not include "urine", because 24-hour urine creatinine is a different laboratory test the one of interest.
 
 Assistance in formulating the initial query
 --------
@@ -183,7 +177,7 @@ Results
 We found that 10-fold cross-validation accuracy was high for all seven laboratory tests, and for all three methods, after all annotated training examples had been added (Table **tableCrossVal**).
 For 6 out of 7 laboratory tests, random forests achieved the top cross validation accuracy, and for 6 out of 7 laboratory tests, L1-regularized logistic regression achieved second place or better.
 Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure **figLassoLearningCurve**), with all seven laboratory tests above 90% cross validation accuracy with 100 or fewer training examples.
-With Random Forests, the convergence occurs with even fewer training examples (Figure **figRandomForestLearningCurve**).
+With random forests, the convergence occurs with even fewer training examples (Figure **figRandomForestLearningCurve**).
 SVM learning curves are not shown because this method had the worst performance, and it is not as easy to interpret its results.
 Regarding feature importance, the feature with the highest coefficient (most informative) was often the Kolmogorov-Smirnov statistic (table **tableCoefficients**) **FIXME** make sure this is true once table is fleshed out. "Wide variety of features were most important, depending on the specific lab test.
 *Further plot of learning curve(s) based on the count of labs (not treating one row of albumin as equal to any other).*
@@ -193,9 +187,9 @@ Discussion
 ========
 
 We have developed a tool that uses machine learning to assist lab adjudication experts.
-No big differences from lab to lab.
-Nor from method to method.
-LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
+We found no large differences in classifier performance among the seven lab tests for which we simulated annotation, and no large differences among the three learning methods.
+The LASSO method performed nearly as well as random forests, with the advantage that it is easier to interpret the model's predictions.
+
 First obvs idea: tried several act learning meth (i.e. which one to annotate *next*, doing simply one at a time), but didn't perf > than the rand samp simulation.
 However adjudicators even in "Excel style" do bulk labeling (sort filter etc).
 
@@ -227,8 +221,6 @@ Machine learning has been applied to lab data cleaning, but to our knowledge *in
 
 References
 ========
-
-Andrew I. Schein and Lyle H. Ungar. Active learning for logistic regression: an evaluation. Machine Learning (2007) 68: 235–265. https://link.springer.com/content/pdf/10.1007/s10994-007-5019-5.pdf
 
 Rajkumar SV, Dimopoulos MA, Palumbo A, *et al.* International Myeloma Working Group updated criteria for the diagnosis of multiple myeloma. Lancet Oncol. 2014 Nov;15(12):e538-48.
 
@@ -264,7 +256,7 @@ Hauser et al. LabRS: A Rosetta stone for retrospective standardization of clinic
 
 Forrey et al. Logical observation identifier names and codes (LOINC) database: a public use set of codes and names for electronic reporting of clinical laboratory test results. Clin Chem. 1996 Jan;42(1):81-90.
 
-
+Pedregosa et al. Scikit-learn: Machine Learning in Python. Journal of Machine Learning Research. 2011; 12:2825-2830.
 
 
 some urls
@@ -284,6 +276,8 @@ Evaluation of a "Lexically Assign, Logically Refine" Strategy for Semi-automated
 these are about *active* learning
 
 --------
+
+Schein AI, and Lyle H. Ungar. Active learning for logistic regression: an evaluation. Machine Learning (2007) 68: 235–265. https://link.springer.com/content/pdf/10.1007/s10994-007-5019-5.pdf
 
 Feng Y, Guo Z, Dong Z, Zhou XY, Kwok KW, Ernst S, Lee SL. An efficient cardiac mapping strategy for radiofrequency catheter ablation with active learning. Int J Comput Assist Radiol Surg. 2017 Jul;12(7):1199-1207. PMID: 28477277.
 
