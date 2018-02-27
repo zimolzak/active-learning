@@ -78,7 +78,6 @@ Materials and Methods
 ========
 
 
-**tableExampleSpreadsheet**
 
 Modeling the response of SMEs
 --------
@@ -95,6 +94,7 @@ Additionally, we added as a feature a Kolmogorov-Smirnov statistic that compares
 
 We evaluated this basic system using seven datasets that had been already adjudicated by VA experts.
 These datasets, and basic information about them, are shown in Table **tableCrossVal**.
+An example of the spreadsheet data that SMEs work with is shown in Table **tableExampleSpreadsheet**.
 We compared the performance of three algorithms in the context of this basic system: logistic regression with an L1 penalty (also known as the least absolute shrinkage and selection operator, or LASSO), support vector machines (SVM), and random forests. 
 We used 10-fold cross validation to evaluate the accuracy of the system using each algorithm.
 
@@ -195,6 +195,7 @@ However adjudicators even in "Excel style" do bulk labeling (sort filter etc).
 
 Our goal was to speed up the process of expert adjudication of lab results.
 Because of the rapid convergence of the learning methods, only about 100 lab data elements need to be adjudicated, and the rest (about 1000, depending on the lab test) can be inferred by the system accurately.
+**FIXME** Add bit about labeling the top 10-ish percent, and that gives you 95 (or whatever) % accuracy (in terms of DB IDs).
 For some labs, this is theoretically as much as a 10-fold improvement in adjudication time.
 A possible decision about how many to label: manually review all labs (rows) where N > 1000, let machine predict rest.
 Workflow improvements arguably over Excel too (filter, type, mass label are more accessible).
@@ -296,3 +297,33 @@ Cohn DA, Atlas LE, Ladner RE. Improving generalization with active learning. Mac
 Atlas LE, Cohn DA, Ladner RE. Training Connectionist Networks with Queries and Selective Sampling. NIPS 1989.*
 
 Settles, Burr (2010), "Active Learning Literature Survey" (PDF), Computer Sciences Technical Report 1648. University of Wisconsin–Madison.*
+
+
+Table Example Spreadsheet
+========
+
+    ID   SME LOINC   LabChemTestName     Topography p1     p50  p99   Count
+    1001 Y   Missing SODIUM              SERUM      126    140  149   115053
+    1002 N   Missing RANDOM URINE SODIUM URINE      6      52   194.1 734
+    1090 N   Missing SODIUM              URINE      5      49.5 155.9 89
+    2118 Y   2947-0  SODIUM              SERUM      133.2  140  144.7 126
+    2203 N   2947-0  SODIUM              URINE,24HR 13.8   150  877.7 98
+    5192 N   2950-4  SODIUM              PERITONEAL 124    132  138.8 10
+    6461 Y   2950-4  SODIUM*IA           BLOOD      125    139  170.9 714
+
+
+Here would be different way to show it, only 1 example per field
+
+    Field           Example
+    -------         -------
+    LabChemTestName SODIUM, I-STAT NA
+    Topography      BLOOD
+    Component       SODIUM
+    Specimen        Whole blood
+    Station         523
+    VISN            1
+    Units           g/dL
+    LOINC           2950-4
+    p50             138.8
+    p99             147.4
+    max             150.1
