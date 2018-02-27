@@ -22,7 +22,19 @@ In particular, we use active learning and interactive feature engineering to spe
 
 **Conclusion**
 
+
+
+
+Misc
+========
+
 *Flow of the Background section: secondary use is a thing that in theory could be useful in lots of ways --> data is messy --> so adjudication exists --> others have tried --> despite those efforts, here is our current process --> which has drawbacks --> maybe active learning can help.*
+
+*Previous active learning stuff from intro*
+Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [Feng], screening citations to include in systematic reviews [Kontonatsios], clinical text processing [Kholghi] [Figueroa] [Nguyen], and phenotyping based on text and billing codes [Chen].
+Other refs: [Cohn] [Atlas] [Settles].
+
+
 
 
 Background and Significance
@@ -55,13 +67,6 @@ Several drawbacks to this process exist.
 First, it is time-consuming and hard to scale.
 Second, the adjudicated concept goes out-of-date as new database records are added.
 Finally, it is difficult for the end-user to understand, validate, or adapt the new database table that contains the final adjudicated concept.
-
-Machine learning presents a possible improved approach.
-The goal would to decrease the number of labels the user will need to provide, without sacrificing quality.
-
-**FIXME** Delete these?
-Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [Feng], screening citations to include in systematic reviews [Kontonatsios], clinical text processing [Kholghi] [Figueroa] [Nguyen], and phenotyping based on text and billing codes [Chen].
-Other refs: [Cohn] [Atlas] [Settles].
 
 
 Objective
@@ -207,10 +212,6 @@ Rajkumar SV, Dimopoulos MA, Palumbo A, *et al.* International Myeloma Working Gr
 
 Raju SP, Ho Y-L, Zimolzak AJ, Katcher B, Cho K, Gagnon DR. Validation of Laboratory Values in a Heterogeneous Healthcare System: The US Veterans Affairs Experience. 31st International Conference on Pharmacoepidemiology & Therapeutic Risk Management (ICPE). Boston; 8/22-26/2015.
 
-
-
-
-
 Khan AN, Griffith SP, Moore C, Russell D, Rosario AC Jr, Bertolli J. Standardizing laboratory data by mapping to LOINC. J Am Med Inform Assoc. 2006 May-Jun;13(3):353-5.
 
 Lin MC, Vreeman DJ, McDonald CJ, Huff SM. Correctness of Voluntary LOINC Mapping for Laboratory Tests in Three Large Institutions. AMIA Annu Symp Proc. 2010 Nov 13;2010:447-51.
@@ -240,6 +241,9 @@ Dolin et al. Evaluation of a "Lexically Assign, Logically Refine" Strategy for S
 Hauser et al. LabRS: A Rosetta stone for retrospective standardization of clinical laboratory test results. J Am Med Inform Assoc. 2018 Feb 1;25(2):121-126.
 
 Forrey et al. Logical observation identifier names and codes (LOINC) database: a public use set of codes and names for electronic reporting of clinical laboratory test results. Clin Chem. 1996 Jan;42(1):81-90.
+
+
+
 
 some urls
 --------
