@@ -159,6 +159,28 @@ For example, if the SME is interested in blood hemoglobin lab values, it is like
 #"Oxygen capacity" vs each word separately
 For example, if the SME is intersted in serum creatinine, it is likely that any laboratory test names containing "24 HR" should be excluded, even if they do not include "urine", because 24-hour urine creatine is a different laboratory test the one of interest.
 
+Assistance in formulating the initial query
+--------
+
+In the current protocol for lab adjudication, the first step in the process is that database technicians pull candidate record types into Excel.
+This is done using an SQL query, matching mainly on the lab test name and/or on LOINC codes in the database.
+For example, a query for hemoglobin might pull records where the lab test name matches with "HGB" or "Hemoglobin" (case insensitive).
+A database technician needs to do this step because many SMEs do not have technical expertise to carry out a database pull.
+Additionally, some SMEs do not have access to VA-wide patient-level data needed to compute percentiles on the lab test results.
+
+Splitting out responsibility for the initial pull across two people often results in significant delays.
+For example, an initial pull request for hemoglobin might have only included "hemoglobin".
+Then, a few days later, when the database technician gives the SME results with that search, the SME might see identifiers like "HGB (hemoglobin)" and realize that they need also to include "HGB" in the search, since there might be results that only include "HGB", not "hemoglobin". 
+The SME submits another ticket and needs to wait another day or so to see an updated table.
+One other source of slowness here is that executing these pulls can be rather slow, with the query taking several hours to complete, because computing the percentiles in the table requires looking at all matching lab test results, and there may be millions of such results.
+
+In order to avoid this inefficiency, we have integrated the initial search into our interactive tool.
+The user specifies search terms using a web form and submits the form to see results.
+The query to see results is fast because we pre-computed value percentiles for all lab test identifiers in the VA system (this took over a month of wall clock time).
+After verifying that the initial query is well formulated, the user can choose to accept the query and begin labelling examples.
+Additionally, if later on the user decides that the query needs to be changed, they can go back to the search form and update the initial query.
+After doing so, labels for examples that are still included in the new query remain as-is so work is not lost.
+
 User collaboration in the web application
 --------
 
