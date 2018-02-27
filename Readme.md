@@ -29,7 +29,7 @@ Background and Significance
 ========
 
 Clinical laboratory data are crucial to much medical research, including both retrospective studies and clinical trials.
-Laboratory data today are commonly availiable in the electronic health record (EHR), where they were collected for the purpose of caring for individual patients but can be analyzed for any number of further studies (termed "secondary use") [MIT Critical Data].
+Laboratory data today are commonly available in the electronic health record (EHR), where they were collected for the purpose of caring for individual patients but can be analyzed for any number of further studies (termed "secondary use") [MIT Critical Data].
 For example, serum creatinine lab test results are essential safety endpoints for an ongoing trial comparing the efficacy of blood pressure medications [Lederle].
 Similarly, serum free light chain results are key indicators in studies of survival in multiple myeloma [Rajkumar].
 It is natural for data analysts to expect all serum creatinine results to be retrieved using a unique database identifier from the EHR, but reality is not this simple.
@@ -142,7 +142,7 @@ Most important, we allow the user to specify a regular expression relative to a 
 This is useful because sometimes a clinician or other expert can look at a text field and easily formulate a pattern that should be excluded or included; including a feature that matches that pattern can substantially increase the ability of the machine learning system to correctly classify examples.
 For example, if the SME is interested in blood hemoglobin lab values, it is likely that any laboratory test names containing "free" should be excluded, because *FREE HGB* refers to a laboratory test different from the one of interest.
 #"Oxygen capacity" vs each word separately
-For example, if the SME is intersted in serum creatinine, it is likely that any laboratory test names containing "24 HR" should be excluded, even if they do not include "urine", because 24-hour urine creatine is a different laboratory test the one of interest.
+For example, if the SME is interested in serum creatinine, it is likely that any laboratory test names containing "24 HR" should be excluded, even if they do not include "urine", because 24-hour urine creatinine is a different laboratory test the one of interest.
 
 User collaboration in the web application
 --------
