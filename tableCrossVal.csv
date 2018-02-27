@@ -1,8 +1,8 @@
-Dataset,database IDs,observations,positive DB IDs,LR,SVM,Random Forests
-ALP,__,__,__,0.98,0.97,0.98
-ALT,__,__,__,0.98,0.94,0.96
-ALB,__,__,__,0.97,0.92,0.99
-HDLC,__,__,__,0.98,0.91,0.98
-Na,__,__,__,0.97,0.98,0.99
-Mg,__,__,__,0.97,0.95,0.99
-HGB,__,__,__,0.97,0.95,0.99
+Dataset,database IDs,observations,positive DB IDs,LR,SVM,Random Forests,Most Informative Feature,Percent of Runs In Which It Was Most Informative
+ALP,__,__,__,0.98,0.97,0.98,K-S Statistic,70%
+ALT,__,__,__,0.98,0.94,0.96,Count of ALB in LabChemTestName,60%
+ALB,__,__,__,0.97,0.92,0.99,___,___
+HDLC,__,__,__,0.98,0.91,0.98,___,___
+Na,__,__,__,0.97,0.98,0.99,___,___
+Mg,__,__,__,0.97,0.95,0.99,___,___
+HGB,__,__,__,0.97,0.95,0.99,___,___

@@ -179,7 +179,7 @@ For 6 out of 7 laboratory tests, random forests achieved the top cross validatio
 Using our engineered features with L1-penalized logistic regression, there is rapid convergence to a high-accuracy classifier, even with random sampling of training examples (Figure **figLassoLearningCurve**), with all seven laboratory tests above 90% cross validation accuracy with 100 or fewer training examples.
 With random forests, the convergence occurs with even fewer training examples (Figure **figRandomForestLearningCurve**).
 SVM learning curves are not shown because this method had the worst performance, and it is not as easy to interpret its results.
-Regarding feature importance, the feature with the highest coefficient (most informative) was often the Kolmogorov-Smirnov statistic (table **tableCoefficients**) **FIXME** make sure this is true once table is fleshed out. "Wide variety of features were most important, depending on the specific lab test.
+Regarding feature importance, the feature with the highest coefficient (most informative) was often ___ (table **tableCrossVal**).
 *Further plot of learning curve(s) based on the count of labs (not treating one row of albumin as equal to any other).*
 
 
