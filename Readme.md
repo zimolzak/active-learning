@@ -22,74 +22,64 @@ In particular, we use active learning and interactive feature engineering to spe
 
 **Conclusion**
 
+
+
+
+Misc
+========
+
 *Flow of the Background section: secondary use is a thing that in theory could be useful in lots of ways --> data is messy --> so adjudication exists --> others have tried --> despite those efforts, here is our current process --> which has drawbacks --> maybe active learning can help.*
+
+*Previous active learning stuff from intro*
+Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [Feng], screening citations to include in systematic reviews [Kontonatsios], clinical text processing [Kholghi] [Figueroa] [Nguyen], and phenotyping based on text and billing codes [Chen].
+Other refs: [Cohn] [Atlas] [Settles].
+
+
 
 
 Background and Significance
 ========
 
-Lab data is an important component in much medical research.
-You can get it from existing data, a.k.a. "secondary use" [MIT Critical Data].
-For example, serum creatinine lab test results are essential for a study comparing the efficacy of several different diuretics [Lederle].
-Similarly, serum free light chain lab test results are key indicators in studies of difference in surival multiple myeloma patients.
-For example, we might want to find serum creatinine lab test results, or serum free light chain results.
-A criterion to distinguish active from smoldering myeloma is serum creatinine level > 2 mg/dL (173 mmol/L) and renal insufficiency attributable to myeloma [Rajkumar].
+Clinical laboratory data are crucial to much medical research, including both retrospective studies and clinical trials.
+Laboratory data today are commonly available in the electronic health record (EHR), where they were collected for the purpose of caring for individual patients but can be analyzed for any number of further studies (termed "secondary use") [MIT Critical Data].
+For example, serum creatinine lab test results are essential safety endpoints for an ongoing trial comparing the efficacy of blood pressure medications [Lederle].
+Similarly, serum free light chain results are key indicators in studies of survival in multiple myeloma [Rajkumar].
+It is natural for data analysts to expect all serum creatinine results to be retrieved using a unique database identifier from the EHR, but reality is not this simple.
 
-It's natural simply to look for serum creatinine lab results in the existing database such as the EMR.
-But this is not simple.
-VA has a data warehouse, which is big [Fihn] but messy [Giroir].
-If we search for "creatinine" in the VA data warehouse's LabChemTestName table, we find >1000 lab test result types, many irrelevant.
+The US Department of Veterans Affairs (VA) maintains a corporate data warehouse covering 20 million unique individuals and 6.6 billion lab tests (as of 2014) [Fihn], but as others have noted "data aggregation across the VHA is highly problematic" [Giroir].
+If we search for "creatinine" in the VA data warehouse's LabChemTestName table, we find >1000 lab test result types, many of which do not reflect the clinical concept of serum creatinine.
 If we make the query more specific - say, "creatinine" followed by "serum" - we get a much more specific list (64 result types), but many true positives are missed.
-Bottom line: even for a simple lab like serum creatinine, to find all the serum creatinine lab results in the VA's electronic health record (EHR), we - or someone - need to do a careful process of adjudication.
-
-Therefore, we have clinical concept adjudication, which is the process of determining which records (e.g., lab test records) correspond to a clinical concept or covariate of interest.
-This is important as a first step for many studies using large databases of healthcare records.
+Therefore, in order to retrieve all or nearly all the serum creatinine results with a high degree of precision, we perform clinical concept adjudication, which is the detailed process of an expert determining which database records correspond to a clinical concept of interest.
 
 Previous authors have faced similar lab result harmonization problems.
-The Logical Observation Identifiers Names and Codes (LOINC) standard has been developed to identify clinical laboratory test results; previous authors have described mapping their local data to this standard. [Khan]
-But mappings of local laboratory tests to LOINC may be erroneous, as well [Lin].
-For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking. [Raebel]
+For instance, the Logical Observation Identifiers Names and Codes (LOINC) standard has been developed to identify clinical laboratory test results [Forrey].
+Previous authors have described mapping their local data to this standard [Khan], but mappings of local laboratory tests to LOINC may be erroneous, as well [Lin].
+For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking [Raebel].
+Other citations about prior work lab cleaning: [Hauser 1] [Vandenbussche] [Fidahussein] [Dolin] [Hauser 2]
 
-Despite these efforts, VA data still needs adjudication.
-Our current process is designed to harmonize test results from 144 independent clinical laboratories.
-It relies on subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
-Database technicians pull candidate record types into Excel.
-Then two SMEs (MDs) label every existing record type, evaluating for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, value ranges, and laboratory test names.
-SMEs generally accomplish this using a spreadsheet that can be sorted and filtered. [Raju]
-SMEs resolve disagreements.
-Database IDs and labels of "yes"- and "no"-labeled record types are entered in new database table as an "adjudicated concept".
-The spreadsheet is kept as documentation.
+The process currently used in our clinical trials and epidemiology centers has been previously described [Raju] and is designed to harmonize test results from 144 independent VA clinical laboratories.
+It relies on clinician subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
+Database technicians retrieve candidate database records, and two SMEs label each record, evaluating for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, distribution of numeric results, and laboratory test names.
+SMEs generally accomplish this using a spreadsheet that can be sorted and filtered, and they resolve disagreements at the end of the process.
+Finally, database IDs and labels of "yes" or "no" for each record are stored in a new database table, and the spreadsheet is stored for future reference.
 
-Several drawbacks to that process exist.
-The process is time-consuming and hard to scale.
-The adjudicated concept goes out-of-date as new record types are added.
-Finally, it is hard for the end-user to understand, validate, or adapt the final adjudicated concept.
-
-Active learning presents a possible improved approach.
-In active learning, the system tries to choose the next example to present to the user and request a label for so as to minimize the number of labels the user will need to provide to train a high quality machine learning algorithm.
-Active learning has been used in a number of fields in medicine, such as selecting mapping points in an electrophysiology study [Feng], screening citations to include in systematic reviews [Kontonatsios], clinical text processing [Kholghi] [Figueroa] [Nguyen], and phenotyping based on text and billing codes [Chen].
-Other refs: [Cohn] [Atlas] [Settles].
-
-Other citations:
-Unit conversions between LOINC codes. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/25/2/192/3871185?searchresult=1
-Implementation and management of a biomedical observation dictionary in a large healthcare information system. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/20/5/940/728793?searchresult=1
-A corpus-based approach for automated LOINC mapping. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/21/1/64/695736?searchresult=1
-Evaluation of a "Lexically Assign, Logically Refine" Strategy for Semi-automated Integration of Overlapping Terminologies. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/5/2/203/740214?searchresult=1
-[IMPORTANT] LabRS: A Rosetta stone for retrospective standardization of clinical laboratory test results. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/25/2/121/3821186?searchresult=1
-
-
+Several drawbacks to this process exist.
+First, it is time-consuming and hard to scale.
+Second, the adjudicated concept goes out-of-date as new database records are added.
+Finally, it is difficult for the end-user to understand, validate, or adapt the new database table that contains the final adjudicated concept.
 
 
 Objective
 ========
-
-We sought to develop a tool that uses machine learning to "extend the reach" of expert lab test annotators, so that the expert doesn't have to enter a decision on each and every row.
+We sought to develop a tool that uses interactive machine learning to "extend the reach" of expert lab test annotators, so that SMEs do not have to enter a decision for every database identifier.
 
 
 Materials and Methods
 ========
 
 We developed software to speed up the process of adjudication using active machine learning and interactive feature engineering, as follows.
+
+**tableExampleSpreadsheet**
 
 Modeling the response of SMEs
 --------
@@ -157,7 +147,7 @@ Most important, we allow the user to specify a regular expression relative to a 
 This is useful because sometimes a clinician or other expert can look at a text field and easily formulate a pattern that should be excluded or included; including a feature that matches that pattern can substantially increase the ability of the machine learning system to correctly classify examples.
 For example, if the SME is interested in blood hemoglobin lab values, it is likely that any laboratory test names containing "free" should be excluded, because *FREE HGB* refers to a laboratory test different from the one of interest.
 #"Oxygen capacity" vs each word separately
-For example, if the SME is intersted in serum creatinine, it is likely that any laboratory test names containing "24 HR" should be excluded, even if they do not include "urine", because 24-hour urine creatine is a different laboratory test the one of interest.
+For example, if the SME is interested in serum creatinine, it is likely that any laboratory test names containing "24 HR" should be excluded, even if they do not include "urine", because 24-hour urine creatinine is a different laboratory test the one of interest.
 
 Assistance in formulating the initial query
 --------
@@ -244,6 +234,57 @@ Rajkumar SV, Dimopoulos MA, Palumbo A, *et al.* International Myeloma Working Gr
 
 Raju SP, Ho Y-L, Zimolzak AJ, Katcher B, Cho K, Gagnon DR. Validation of Laboratory Values in a Heterogeneous Healthcare System: The US Veterans Affairs Experience. 31st International Conference on Pharmacoepidemiology & Therapeutic Risk Management (ICPE). Boston; 8/22-26/2015.
 
+Khan AN, Griffith SP, Moore C, Russell D, Rosario AC Jr, Bertolli J. Standardizing laboratory data by mapping to LOINC. J Am Med Inform Assoc. 2006 May-Jun;13(3):353-5.
+
+Lin MC, Vreeman DJ, McDonald CJ, Huff SM. Correctness of Voluntary LOINC Mapping for Laboratory Tests in Three Large Institutions. AMIA Annu Symp Proc. 2010 Nov 13;2010:447-51.
+
+Raebel MA, Haynes K, Woodworth TS, Saylor G, Cavagnaro E, Coughlin KO, Curtis LH, Weiner MG, Archdeacon P, Brown JS. Electronic clinical laboratory test results data tables: lessons from Mini-Sentinel. Pharmacoepidemiol Drug Saf. 2014 Jun;23(6):609-18.
+
+Held, Stonebraker, Davenport, Ilyas, Brodie, Palmer, Markarian. Getting Data Right. 2016. O'Reilly Media, Sebastopol, CA.
+
+Lederle FA, Cushman WC, Ferguson RE, Brophy MT, Fiore LD. Chlorthalidone Versus Hydrochlorothiazide: A New Kind of Veterans Affairs Cooperative Study. Ann Intern Med. 2016 Nov 1;165(9):663-664.
+
+Fihn SD, Francis J, Clancy C, et al. Insights from advanced analytics at the veterans health administration. Health Aff. 2014;33(7):1203-1211.
+
+Giroir BP, Wilensky GR. Reforming the Veterans Health Administration - Beyond Palliation of Symptoms. N Engl J Med. 2015;373(18):1693-1695.
+
+MIT Critical Data, editors. Secondary Analysis of Electronic Health Records. Cham, Switzerland: Springer; 2016.
+
+Smirnov N. Table for Estimating the Goodness of Fit of Empirical Distributions. Ann. Math. Statist. Volume 19, Number 2 (1948), 279-281.
+
+Hauser et al. Unit conversions between LOINC codes. J Am Med Inform Assoc. 2018 Feb 1;25(2):192-196.
+
+Vandenbussche et al. Implementation and management of a biomedical observation dictionary in a large healthcare information system. J Am Med Inform Assoc. 2013 Sep-Oct;20(5):940-6.
+
+Fidahussein et al. A corpus-based approach for automated LOINC mapping. J Am Med Inform Assoc. 2014 Jan-Feb;21(1):64-72.
+
+Dolin et al. Evaluation of a "Lexically Assign, Logically Refine" Strategy for Semi-automated Integration of Overlapping Terminologies. J Am Med Inform Assoc. 1998 Mar-Apr;5(2):203-13.
+
+Hauser et al. LabRS: A Rosetta stone for retrospective standardization of clinical laboratory test results. J Am Med Inform Assoc. 2018 Feb 1;25(2):121-126.
+
+Forrey et al. Logical observation identifier names and codes (LOINC) database: a public use set of codes and names for electronic reporting of clinical laboratory test results. Clin Chem. 1996 Jan;42(1):81-90.
+
+
+
+
+some urls
+--------
+
+Unit conversions between LOINC codes. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/25/2/192/3871185?searchresult=1
+
+Implementation and management of a biomedical observation dictionary in a large healthcare information system. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/20/5/940/728793?searchresult=1
+
+A corpus-based approach for automated LOINC mapping. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/21/1/64/695736?searchresult=1
+
+Evaluation of a "Lexically Assign, Logically Refine" Strategy for Semi-automated Integration of Overlapping Terminologies. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/5/2/203/740214?searchresult=1
+
+[IMPORTANT] LabRS: A Rosetta stone for retrospective standardization of clinical laboratory test results. https://academic-oup-com.ezp-prod1.hul.harvard.edu/jamia/article/25/2/121/3821186?searchresult=1
+
+
+these are about *active* learning
+
+--------
+
 Feng Y, Guo Z, Dong Z, Zhou XY, Kwok KW, Ernst S, Lee SL. An efficient cardiac mapping strategy for radiofrequency catheter ablation with active learning. Int J Comput Assist Radiol Surg. 2017 Jul;12(7):1199-1207. PMID: 28477277.
 
 Kontonatsios G, Brockmeier AJ, Przybyła P, McNaught J, Mu T, Goulermas JY, Ananiadou S. A semi-supervised approach using label propagation to support citation screening. J Biomed Inform. 2017 Aug;72:67-76. PMID: 28648605.
@@ -261,24 +302,3 @@ Cohn DA, Atlas LE, Ladner RE. Improving generalization with active learning. Mac
 Atlas LE, Cohn DA, Ladner RE. Training Connectionist Networks with Queries and Selective Sampling. NIPS 1989.*
 
 Settles, Burr (2010), "Active Learning Literature Survey" (PDF), Computer Sciences Technical Report 1648. University of Wisconsin–Madison.*
-
-Khan AN, Griffith SP, Moore C, Russell D, Rosario AC Jr, Bertolli J. Standardizing laboratory data by mapping to LOINC. J Am Med Inform Assoc. 2006 May-Jun;13(3):353-5.
-
-Lin MC, Vreeman DJ, McDonald CJ, Huff SM. Correctness of Voluntary LOINC Mapping for Laboratory Tests in Three Large Institutions. AMIA Annu Symp Proc. 2010 Nov 13;2010:447-51.
-
-Raebel MA, Haynes K, Woodworth TS, Saylor G, Cavagnaro E, Coughlin KO, Curtis LH, Weiner MG, Archdeacon P, Brown JS. Electronic clinical laboratory test results data tables: lessons from Mini-Sentinel. Pharmacoepidemiol Drug Saf. 2014 Jun;23(6):609-18.
-
-Held, Stonebraker, Davenport, Ilyas, Brodie, Palmer, Markarian. Getting Data Right. 2016. O'Reilly Media, Sebastopol, CA.
-
-Lederle FA, Cushman WC, Ferguson RE, Brophy MT, Fiore LD. Chlorthalidone Versus Hydrochlorothiazide: A New Kind of Veterans Affairs Cooperative Study. Ann Intern Med. 2016 Nov 1;165(9):663-664.
-
-Fihn SD, Francis J, Clancy C, et al. Insights from advanced analytics at the veterans health administration. Health Aff. 2014;33(7):1203-1211.
-
-Giroir BP, Wilensky GR. Reforming the Veterans Health Administration — Beyond Palliation of Symptoms. N Engl J Med. 2015;373(18):1693-1695.
-
-MIT Critical Data, editors. Secondary Analysis of Electronic Health Records. Cham, Switzerland: Springer; 2016.
-
-Smirnov N. Table for Estimating the Goodness of Fit of Empirical Distributions
-Ann. Math. Statist. Volume 19, Number 2 (1948), 279-281.
-
-
