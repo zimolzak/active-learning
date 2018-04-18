@@ -83,7 +83,7 @@ Evaluation of a "Lexically Assign, Logically Refine" Strategy for Semi-automated
 Objective
 ========
 
-We sought to develop a tool that uses machine/active learning to "extend the reach" of expert lab test annotators, so that the expert doesn't have to enter a decision on each and every row.
+We sought to develop a machine learning tool to "extend the reach" of expert laboratory test adjudicators, so that they do not need to classify each data element manually.
 
 
 Materials and Methods
@@ -162,7 +162,7 @@ Regarding feature importance, the feature with the highest coefficient (most inf
 Discussion
 ========
 
-We have developed a tool that uses machine learning to assist lab adjudication experts.
+We have developed a machine learning tool to assist experts who harmonize heterogeneous laboratory data elements across institutions.
 No big differences from lab to lab.
 Nor from method to method.
 LASSO is nearly as good as Random Forests and it has the advantage that it is easy for end users to understand the basis of the models predictions.
