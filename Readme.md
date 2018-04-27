@@ -71,7 +71,8 @@ Finally, it is difficult for the end-user to understand, validate, or adapt the 
 
 Objective
 ========
-We sought to develop a tool that uses interactive machine learning to "extend the reach" of expert lab test annotators, so that SMEs do not have to enter a decision for every database identifier.
+
+We sought to develop a machine learning tool to "extend the reach" of expert laboratory test adjudicators, so that they do not need to classify each data element manually.
 
 
 Materials and Methods
