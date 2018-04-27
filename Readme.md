@@ -3,8 +3,10 @@ Clinical Concept Adjudication via Active Machine Learning
 
 Fillmore, Zimolzak, others
 
-Cf requirements for a "brief communications" article here: https://academic.oup.com/jamia/pages/General_Instructions .
-2000 words, 2 tables, 3 figs.
+Requirements for a "brief communications" article: 2000 words, 2 tables, 3 figs.
+
+https://academic.oup.com/jamia/pages/General_Instructions
+
 
 Abstract
 ========
@@ -21,8 +23,6 @@ In particular, we use active learning and interactive feature engineering to spe
 **Discussion**
 
 **Conclusion**
-
-
 
 
 Misc
@@ -77,8 +77,6 @@ We sought to develop a machine learning tool to "extend the reach" of expert lab
 
 Materials and Methods
 ========
-
-
 
 Modeling the response of SMEs
 --------
@@ -169,7 +167,7 @@ After doing so, labels for examples that are still included in the new query rem
 User collaboration in the web application
 --------
 
-
+(To be written.)
 
 
 Results
@@ -304,6 +302,7 @@ Table Example Spreadsheet
 ========
 
     ID   SME LOINC   LabChemTestName     Topography p1     p50  p99   Count
+    ---- --  ------- --------            -------    ----   ---  ---   ------
     1001 Y   Missing SODIUM              SERUM      126    140  149   115053
     1002 N   Missing RANDOM URINE SODIUM URINE      6      52   194.1 734
     1090 N   Missing SODIUM              URINE      5      49.5 155.9 89
