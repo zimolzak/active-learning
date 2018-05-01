@@ -41,21 +41,23 @@ Background and Significance
 ========
 
 Clinical laboratory data are crucial to much medical research, including both retrospective studies and clinical trials.
-Laboratory data today are commonly available in the electronic health record (EHR), where they were collected for the purpose of caring for individual patients but can be analyzed for any number of further studies (termed "secondary use") [MIT Critical Data].
-For example, serum creatinine lab test results are essential safety endpoints for an ongoing trial comparing the efficacy of blood pressure medications [Lederle].
+Laboratory data today are commonly available in the electronic health record (EHR), where they are collected for the purpose of caring for individual patients but can be analyzed for any number of further studies (termed "secondary use") [MIT Critical Data].
+For example, serum creatinine lab test results, collected during routine clinical care, serve as safety endpoints for an ongoing "point of care" trial comparing the efficacy of blood pressure medications [Lederle].
 Similarly, serum free light chain results are key indicators in studies of survival in multiple myeloma [Rajkumar].
 It is natural for data analysts to expect all serum creatinine results to be retrieved using a unique database identifier from the EHR, but reality is not this simple.
 
 The US Department of Veterans Affairs (VA) maintains a corporate data warehouse covering 20 million unique individuals and 6.6 billion lab tests (as of 2014) [Fihn], but as others have noted "data aggregation across the VHA is highly problematic" [Giroir].
-If we search for "creatinine" in the VA data warehouse's LabChemTestName table, we find >1000 lab test result types, many of which do not reflect the clinical concept of serum creatinine.
-If we make the query more specific - say, "creatinine" followed by "serum" - we get a much more specific list (64 result types), but many true positives are missed.
+If we search for "creatinine" in the VA data warehouse's LabChemTest dimension table, we find >1000 lab test result types, many of which are not truly serum creatinine results.
+If we make the query more specific - say, "creatinine" followed by "serum" - we find a shorter (64 result types) and much more specific list, but many true positives are missed.
 Therefore, in order to retrieve all or nearly all the serum creatinine results with a high degree of precision, we perform clinical concept adjudication, which is the detailed process of an expert determining which database records correspond to a clinical concept of interest.
 
 Previous authors have faced similar lab result harmonization problems.
-For instance, the Logical Observation Identifiers Names and Codes (LOINC) standard has been developed to identify clinical laboratory test results [Forrey].
-Previous authors have described mapping their local data to this standard [Khan], but mappings of local laboratory tests to LOINC may be erroneous, as well [Lin].
-For example, the Mini-Sentinel program had to take clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges addressed by hands-on quality checking [Raebel].
-Other citations about prior work lab cleaning: [Hauser 1] [Vandenbussche] [Fidahussein] [Dolin] [Hauser 2]
+For instance, the Logical Observation Identifiers Names and Codes (LOINC) standard has been developed to identify clinical laboratory test results [Forrey], and previous authors have described mapping their local data to this standard [Khan], but mappings of local laboratory tests to LOINC may be erroneous [Lin].
+In another example, the Mini-Sentinel program had to receive clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges, many of which were addressed by hands-on quality checking [Raebel].
+
+A large group of 44 European hospitals developed an internally used dictionary of laboratory observations and mapped it to LOINC. Some tests in use were not referenced in LOINC [Vandenbussche]. 
+
+Other citations about prior work lab cleaning: [Hauser 192-196] [Vandenbussche] [Fidahussein] [Dolin] [Hauser 121-126]
 
 The process currently used in our clinical trials and epidemiology centers has been previously described [Raju] and is designed to harmonize test results from 144 independent VA clinical laboratories.
 It relies on clinician subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
