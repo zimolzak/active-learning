@@ -77,14 +77,10 @@ Second, the adjudicated concept goes out-of-date as new database records are add
 Finally, it is difficult for the end-user to understand, validate, or adapt the new database table that contains the final adjudicated concept.
 
 
-
-
 Objective
 ========
 
-We sought to develop a machine learning tool to "extend the reach" of expert laboratory test adjudicators, so that they do not need to classify each data element manually.
-
-**sell the fact that there's a SME-facine front end, sell the collaboration in Don's version, initial pull, assign to SME, labeling, consensus, "publish" results. Facilitates collaboration among the group and promotes efficiencies across the organization.**
+We sought to develop a machine learning tool to "extend the reach" of expert laboratory test adjudicators, so that they do not need to classify each data element manually. We aimed to provide access to automatic laboratory classification in a SME-facing front end for continued use by adjudicators. We intend our tool to cover all steps in the workflow (including the initial search for laboratory test names, the consensus process, and the database storage of SME decisions), in order to lower the barrier to collaboration among the group, and to promotes efficiencies and reuse of adjudicated laboratory tests across the entire VA.
 
 
 Materials and Methods
