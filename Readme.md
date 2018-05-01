@@ -55,14 +55,20 @@ Previous authors have faced similar lab result harmonization problems.
 For instance, the Logical Observation Identifiers Names and Codes (LOINC) standard has been developed to identify clinical laboratory test results [Forrey], and previous authors have described mapping their local data to this standard [Khan], but mappings of local laboratory tests to LOINC may be erroneous [Lin].
 In another example, the Mini-Sentinel program had to receive clinical laboratory results from twelve diverse data partners and deal with inconsistent units and LOINC availability, among other challenges, many of which were addressed by hands-on quality checking [Raebel].
 
-A large group of 44 European hospitals developed an internally used dictionary of laboratory observations and mapped it to LOINC. Some tests in use were not referenced in LOINC [Vandenbussche]. 
-
-Other citations about prior work lab cleaning: [Hauser 192-196] [Vandenbussche] [Fidahussein] [Dolin] [Hauser 121-126]
+*Paragraph needs work putting it in context and our stuff in its context.*
+Early work has shown that lexical comparison of test names followed by subject matter expert review can integrate a more detailed set of laboratory test codes (LOINC) with a less detailed one (SNOMED procedures) [Dolin].
+Automated mapping of local terms to LOINC has been done using machine learning and information retrieval approach, which assigned about 70-80% of local terms to the correct LOINC [Fidahussein].
+A large group of 44 European hospitals developed an internally used dictionary of laboratory observations and mapped it to LOINC. Some tests in use were not referenced in LOINC [Vandenbussche].
+Because LOINC maintains different code points for tests reported in
+different units, Work has been performed in these unit conversions
+[Hauser 121-126], and in standardizing laboratory test *results*
+across multiple institutions, as distinct from standardizing simply
+the type of test [Hauser 192-196].
 
 The process currently used in our clinical trials and epidemiology centers has been previously described [Raju] and is designed to harmonize test results from 144 independent VA clinical laboratories.
 It relies on clinician subject matter experts (SMEs) first to design a search for appropriate laboratory test names.
-Database technicians retrieve candidate database records, and two SMEs label each record, evaluating for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, distribution of numeric results, and laboratory test names.
-SMEs generally accomplish this using a spreadsheet that can be sorted and filtered, and they resolve disagreements at the end of the process.
+Database technicians then retrieve candidate database records, and two SMEs label each record, evaluating for appropriate specimen types (e.g. whole blood, urine, cerebrospinal fluid), units, distribution of numeric results, and laboratory test names.
+SMEs currently accomplish this using a spreadsheet that can be sorted and filtered, and they resolve disagreements at the end of the process.
 Finally, database IDs and labels of "yes" or "no" for each record are stored in a new database table, and the spreadsheet is stored for future reference.
 
 Several drawbacks to this process exist.
@@ -71,10 +77,14 @@ Second, the adjudicated concept goes out-of-date as new database records are add
 Finally, it is difficult for the end-user to understand, validate, or adapt the new database table that contains the final adjudicated concept.
 
 
+
+
 Objective
 ========
 
 We sought to develop a machine learning tool to "extend the reach" of expert laboratory test adjudicators, so that they do not need to classify each data element manually.
+
+**sell the fact that there's a SME-facine front end, sell the collaboration in Don's version, initial pull, assign to SME, labeling, consensus, "publish" results. Facilitates collaboration among the group and promotes efficiencies across the organization.**
 
 
 Materials and Methods
